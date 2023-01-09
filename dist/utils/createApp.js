@@ -28,8 +28,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createApp = void 0;
 const express_1 = __importDefault(require("express"));
-const compression_1 = __importDefault(require("compression"));
 const cors_1 = __importDefault(require("cors"));
+const compression_1 = __importDefault(require("compression"));
+const express_session_1 = __importDefault(require("express-session"));
 const passport_1 = __importDefault(require("passport"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const connect_mongo_1 = __importDefault(require("connect-mongo"));
@@ -37,12 +38,12 @@ const routes_1 = __importDefault(require("../routes/routes"));
 require("../strategies/local.strategy");
 const dotenv = __importStar(require("dotenv"));
 require("../utils/cloudinary");
-dotenv.config();
 const createApp = () => {
+    dotenv.config();
     const app = (0, express_1.default)();
-    app.use(express_1.default.static('dist'));
-    // Gzip compressing
+    // Compressed to gzip file
     app.use((0, compression_1.default)());
+    app.use(express_1.default.static('dist'));
     // Enable parsing Middleware for Request
     app.use(express_1.default.json());
     app.use(express_1.default.urlencoded({ extended: true }));
@@ -52,13 +53,16 @@ const createApp = () => {
         origin: ['https://localhost:3000'],
         credentials: true,
     }));
-    app.use(session({
+    app.use((0, express_session_1.default)({
         secret: 'ASDASDASD',
         resave: false,
         saveUninitialized: false,
-        // cookie: {
-        //   maxAge: 60000 * 60 * 24 * 7,
-        // },
+        cookie: {
+            httpOnly: true,
+            secure: true,
+            maxAge: 1000 * 60 * 60 * 48,
+            sameSite: 'none',
+        },
         store: connect_mongo_1.default.create({
             mongoUrl: `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@pm.bamwdsp.mongodb.net/?retryWrites=true&w=majority`,
         }),
@@ -69,6 +73,3 @@ const createApp = () => {
     return app;
 };
 exports.createApp = createApp;
-function session(arg0) {
-    throw new Error('Function not implemented.');
-}

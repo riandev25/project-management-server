@@ -11,9 +11,19 @@ import '../strategies/local.strategy';
 import * as dotenv from 'dotenv';
 import '../utils/cloudinary';
 
-export const createApp = (): Express => {
-  dotenv.config();
+dotenv.config();
+// type User = {
+//   id: string;
+//   email: string;
+// };
 
+// declare module 'express-session' {
+//   interface SessionData {
+//     user: User;
+//   }
+// }
+
+export const createApp = (): Express => {
   const app = express();
 
   // Compressed to gzip file

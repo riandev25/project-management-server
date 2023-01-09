@@ -11,9 +11,9 @@ import '../strategies/local.strategy';
 import * as dotenv from 'dotenv';
 import '../utils/cloudinary';
 
-export const createApp = (): Express => {
-  dotenv.config();
+dotenv.config();
 
+export const createApp = (): Express => {
   const app = express();
 
   // Compressed to gzip file

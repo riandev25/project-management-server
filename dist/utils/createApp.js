@@ -1,65 +1,74 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
 };
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.createApp = void 0;
+const express_1 = __importDefault(require("express"));
+const compression_1 = __importDefault(require("compression"));
+const cors_1 = __importDefault(require("cors"));
 const passport_1 = __importDefault(require("passport"));
-const passport_local_1 = require("passport-local");
-const User_1 = require("../models/User");
-const passwordHelper_1 = require("./passwordHelper");
-passport_1.default.serializeUser((user, done) => {
-    console.log('Serializing User...');
-    console.log(user);
-    done(null, user);
-    // done(null, user);
-});
-passport_1.default.deserializeUser((id, done) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('Deserializing User');
-    console.log(id);
-    try {
-        const user = yield User_1.User.findById(id);
-        if (!user)
-            throw new Error('User not found');
-        console.log(user);
-        done(null, user);
-    }
-    catch (err) {
-        console.log(err);
-        done(err, null);
-    }
-}));
-passport_1.default.use(new passport_local_1.Strategy({
-    usernameField: 'email',
-}, (email, password, done) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(email);
-    console.log(password);
-    try {
-        if (!email || !password)
-            throw new Error('Missing Credentials');
-        const userDB = yield User_1.User.findOne({ email });
-        if (!userDB)
-            throw new Error('User not found');
-        const isValid = (0, passwordHelper_1.comparePassword)(password, userDB.password);
-        if (isValid) {
-            console.log('Authenticated Successfully!');
-            done(null, userDB);
-        }
-        else {
-            console.log('Invalid Authentication');
-            done(null, null);
-        }
-    }
-    catch (err) {
-        console.log(err);
-        done(err, null);
-    }
-})));
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
+const connect_mongo_1 = __importDefault(require("connect-mongo"));
+const routes_1 = __importDefault(require("../routes/routes"));
+require("../strategies/local.strategy");
+const dotenv = __importStar(require("dotenv"));
+require("../utils/cloudinary");
+dotenv.config();
+const createApp = () => {
+    const app = (0, express_1.default)();
+    app.use(express_1.default.static('dist'));
+    // Gzip compressing
+    app.use((0, compression_1.default)());
+    // Enable parsing Middleware for Request
+    app.use(express_1.default.json());
+    app.use(express_1.default.urlencoded({ extended: true }));
+    app.use((0, cookie_parser_1.default)());
+    // Enable cors
+    app.use((0, cors_1.default)({
+        origin: ['https://localhost:3000'],
+        credentials: true,
+    }));
+    app.use(session({
+        secret: 'ASDASDASD',
+        resave: false,
+        saveUninitialized: false,
+        // cookie: {
+        //   maxAge: 60000 * 60 * 24 * 7,
+        // },
+        store: connect_mongo_1.default.create({
+            mongoUrl: `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@pm.bamwdsp.mongodb.net/?retryWrites=true&w=majority`,
+        }),
+    }));
+    app.use(passport_1.default.initialize());
+    app.use(passport_1.default.session());
+    app.use('/api', routes_1.default);
+    return app;
+};
+exports.createApp = createApp;
+function session(arg0) {
+    throw new Error('Function not implemented.');
+}

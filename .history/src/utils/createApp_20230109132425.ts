@@ -1,8 +1,7 @@
 import { Express } from 'express';
 import express from 'express';
-import cors from 'cors';
 import compression from 'compression';
-import session from 'express-session';
+import cors from 'cors';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
 import MongoStore from 'connect-mongo';
@@ -11,15 +10,15 @@ import '../strategies/local.strategy';
 import * as dotenv from 'dotenv';
 import '../utils/cloudinary';
 
-export const createApp = (): Express => {
-  dotenv.config();
+dotenv.config();
 
+export const createApp = (): Express => {
   const app = express();
 
-  // Compressed to gzip file
-  app.use(compression());
-
   app.use(express.static('dist'));
+
+  // Gzip compressing
+  app.use(compression());
 
   // Enable parsing Middleware for Request
   app.use(express.json());
@@ -56,3 +55,14 @@ export const createApp = (): Express => {
   app.use('/api', routes);
   return app;
 };
+function session(arg0: {
+  secret: string;
+  resave: boolean;
+  saveUninitialized: boolean;
+  // cookie: {
+  //   maxAge: 60000 * 60 * 24 * 7,
+  // },
+  store: MongoStore;
+}): any {
+  throw new Error('Function not implemented.');
+}

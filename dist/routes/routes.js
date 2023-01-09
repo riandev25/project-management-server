@@ -1,0 +1,23 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const auth_route_1 = __importDefault(require("./auth.route"));
+const board_route_1 = __importDefault(require("./board.route"));
+const card_route_1 = __importDefault(require("./card.route"));
+const checklist_route_1 = __importDefault(require("./checklist.route"));
+const label_route_1 = __importDefault(require("./label.route"));
+const attachment_route_1 = __importDefault(require("./attachment.route"));
+const mongodb_1 = require("../database/mongodb");
+const mongodb_2 = require("../database/mongodb");
+const router = (0, express_1.Router)();
+router.use(mongodb_1.connectToSessions, mongodb_2.connectToBoards);
+router.use('/auth', auth_route_1.default);
+router.use('/boards', board_route_1.default);
+router.use('/checklists', checklist_route_1.default);
+router.use('/labels', label_route_1.default);
+router.use('/cards', card_route_1.default);
+router.use('/attachments', attachment_route_1.default);
+exports.default = router;

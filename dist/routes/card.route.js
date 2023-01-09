@@ -1,0 +1,17 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const createCard_controller_1 = require("../controllers/card/createCard.controller");
+const deleteCards_controller_1 = require("../controllers/card/deleteCards.controller");
+const deleteSingleCard_1 = require("../controllers/card/deleteSingleCard");
+const getCard_controller_1 = require("../controllers/card/getCard.controller");
+const updateCard_controller_1 = require("../controllers/card/updateCard.controller");
+const authenticate_1 = require("../middlewares/authenticate");
+const router = (0, express_1.Router)();
+router.use(authenticate_1.authenticateUser);
+router.post('', createCard_controller_1.createCard);
+router.get('', getCard_controller_1.getCard);
+router.delete('', deleteCards_controller_1.deleteCards);
+router.delete('/:id', deleteSingleCard_1.deleteSingleCard);
+router.patch('/:id', updateCard_controller_1.updateCard);
+exports.default = router;

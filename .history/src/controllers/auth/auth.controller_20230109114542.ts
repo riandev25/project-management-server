@@ -20,13 +20,7 @@ export const authRegisterController = asyncHandler(
         email,
         apiKey: hashedApiKey,
       });
-      newUser.save((err) => {
-        if (err) {
-          res.status(400).send(err);
-        } else {
-          res.status(201).send(apiKey);
-        }
-      });
+      res.status(201).send(apiKey);
     }
   }
 );

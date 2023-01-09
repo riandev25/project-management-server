@@ -1,5 +1,5 @@
 import multer from 'multer';
-import path from 'path';
+import path = require('path');
 
 // Multer config
 export const upload = multer({

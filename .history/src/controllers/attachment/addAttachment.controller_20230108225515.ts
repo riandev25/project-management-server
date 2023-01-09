@@ -15,7 +15,7 @@ export const addAttachment = asyncHandler(async (req, res, next) => {
     // Check if file exist
     const query = { name: baseFilename, idCard };
     const attachmentExist = await Attachment.find(query);
-    console.log(baseFilename);
+    console.log(attachmentExist);
 
     if (attachmentExist.length == 0) {
       const attachment = new Attachment({

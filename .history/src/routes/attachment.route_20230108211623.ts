@@ -9,7 +9,8 @@ const router = Router();
 
 router.use(authenticateUser);
 
-router.post('/image', upload.single('image'), addAttachment);
+router.post('', upload.single('image'), addAttachment);
+router.post('', upload.array('files'), addAttachment)
 router.get('', getAttachment);
 router.delete('/:id', deleteAttachment);
 

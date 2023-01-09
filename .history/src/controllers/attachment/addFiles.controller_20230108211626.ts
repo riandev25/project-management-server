@@ -3,7 +3,7 @@ import cloudinary from 'cloudinary';
 import { parse } from 'path';
 import { Attachment } from '../../models/attachment.model';
 
-export const addAttachment = asyncHandler(async (req, res, next) => {
+export const addFiles = asyncHandler(async (req, res, next) => {
   if (req.file) {
     const file = req.file.path;
     const options = { folder: 'attachments' };
@@ -15,7 +15,6 @@ export const addAttachment = asyncHandler(async (req, res, next) => {
     // Check if file exist
     const query = { name: baseFilename, idCard };
     const attachmentExist = await Attachment.find(query);
-    console.log(baseFilename);
 
     if (attachmentExist.length == 0) {
       const attachment = new Attachment({
@@ -28,7 +27,7 @@ export const addAttachment = asyncHandler(async (req, res, next) => {
       res.status(201).send({ attachment });
       next();
     } else {
-      res.status(400).send({
+      res.status(500).send({
         message: 'Filename already exist. Please provide another filename.',
       });
       // next(

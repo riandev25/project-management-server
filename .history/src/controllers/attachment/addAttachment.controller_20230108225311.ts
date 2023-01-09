@@ -4,6 +4,7 @@ import { parse } from 'path';
 import { Attachment } from '../../models/attachment.model';
 
 export const addAttachment = asyncHandler(async (req, res, next) => {
+  console.log(req.file);
   if (req.file) {
     const file = req.file.path;
     const options = { folder: 'attachments' };
@@ -15,7 +16,6 @@ export const addAttachment = asyncHandler(async (req, res, next) => {
     // Check if file exist
     const query = { name: baseFilename, idCard };
     const attachmentExist = await Attachment.find(query);
-    console.log(baseFilename);
 
     if (attachmentExist.length == 0) {
       const attachment = new Attachment({

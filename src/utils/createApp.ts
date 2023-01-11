@@ -18,9 +18,7 @@ export const createApp = (): Express => {
 
   // Enable cors
   app.use(
-    cors({
-      credentials: true,
-    })
+    cors()
   );
 
   // Compressed to gzip file

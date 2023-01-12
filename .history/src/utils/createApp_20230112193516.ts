@@ -29,7 +29,7 @@ export const createApp = (): Express => {
     })
   );
 
-  // app.use(corsHeader);
+  app.use(corsHeader);
 
   // Compressed to gzip file
   app.use(compression());
@@ -54,7 +54,7 @@ export const createApp = (): Express => {
       //   sameSite: 'none',
       // },
       store: MongoStore.create({
-        mongoUrl: `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@pm.bamwdsp.mongodb.net/session-data?retryWrites=true&w=majority`,
+        mongoUrl: `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@pm.bamwdsp.mongodb.net/?retryWrites=true&w=majority`,
       }),
     })
   );

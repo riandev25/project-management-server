@@ -29,7 +29,7 @@ export const createApp = (): Express => {
     })
   );
 
-  // app.use(corsHeader);
+  app.use(corsHeader);
 
   // Compressed to gzip file
   app.use(compression());

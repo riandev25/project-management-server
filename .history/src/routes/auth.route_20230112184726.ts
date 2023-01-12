@@ -20,16 +20,19 @@ router.post(
   //   res.status(200).send(req.user);
   // }
   (req, res) => {
-    res.status(200).send({ message: 'Logged in succesfully' });
+    console.log(req.user);
+    res.redirect('');
   }
 );
 
-router.post('/logout', (req, res, next) => {
-  req.session.destroy((err) => {
-    if (err) return next(err);
+router.post('/logout', (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    res.redirect('/login');
   });
-  res.clearCookie('session');
-  res.send(204);
 });
 
 router.post('/register', authRegisterController);

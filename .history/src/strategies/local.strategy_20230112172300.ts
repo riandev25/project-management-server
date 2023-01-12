@@ -30,6 +30,8 @@ passport.use(
       usernameField: 'email',
     },
     async (email, password, done) => {
+      console.log(email);
+      console.log(password);
       try {
         if (!email || !password) throw new Error('Missing Credentials');
         const userDB = await User.findOne({ email });

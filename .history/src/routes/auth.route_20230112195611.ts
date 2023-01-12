@@ -20,7 +20,8 @@ router.post(
   //   res.status(200).send(req.user);
   // }
   (req, res) => {
-    res.status(200).send({ message: 'Logged in succesfully' });
+    console.log(req.user);
+    res.redirect('');
   }
 );
 

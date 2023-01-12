@@ -10,6 +10,6 @@ dotenv.config();
 //   return UserConn.model('User', userSchema, 'users');
 // })
 
-const UserConn = mongoose.createConnection(process.env.MONGO_BOARD_URI!);
+const UserConn = mongoose.createConnection(process.env.MONGO_SESSION_URI!);
 
 export const User = UserConn.model('User', userSchema, 'users');

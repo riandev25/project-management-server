@@ -40,8 +40,6 @@ passport_1.default.deserializeUser((id, done) => __awaiter(void 0, void 0, void 
 passport_1.default.use(new passport_local_1.Strategy({
     usernameField: 'email',
 }, (email, password, done) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(email);
-    console.log(password);
     try {
         if (!email || !password)
             throw new Error('Missing Credentials');

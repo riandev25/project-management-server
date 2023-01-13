@@ -31,5 +31,9 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv = __importStar(require("dotenv"));
 const user_schema_1 = require("./schemas/user.schema");
 dotenv.config();
-const UserConn = mongoose_1.default.createConnection(process.env.MONGO_SESSION_URI);
+// export const User = asyncHandler(async() => {
+//   const UserConn = await mongoose.createConnection(process.env.MONGO_SESSION_URI!);
+//   return UserConn.model('User', userSchema, 'users');
+// })
+const UserConn = mongoose_1.default.createConnection(process.env.MONGO_BOARD_URI);
 exports.User = UserConn.model('User', user_schema_1.userSchema, 'users');

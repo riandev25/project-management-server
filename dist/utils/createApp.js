@@ -41,30 +41,35 @@ require("../utils/cloudinary");
 const createApp = () => {
     dotenv.config();
     const app = (0, express_1.default)();
+    // Enable cors
+    // const corsOptions = {
+    //   origin: '*',
+    //   credentials: true,
+    // };
+    app.use((0, cors_1.default)({
+        origin: 'http://localhost:3000',
+        credentials: true,
+    }));
+    // app.use(corsHeader);
     // Compressed to gzip file
     app.use((0, compression_1.default)());
     app.use(express_1.default.static('dist'));
     // Enable parsing Middleware for Request
     app.use(express_1.default.json());
-    app.use(express_1.default.urlencoded({ extended: true }));
+    // app.use(express.urlencoded({ extended: true }));
     app.use((0, cookie_parser_1.default)());
-    // Enable cors
-    app.use((0, cors_1.default)({
-        origin: ['https://localhost:3000'],
-        credentials: true,
-    }));
     app.use((0, express_session_1.default)({
-        secret: 'ASDASDASD',
+        secret: 'session',
         resave: false,
         saveUninitialized: false,
-        cookie: {
-            httpOnly: true,
-            secure: true,
-            maxAge: 1000 * 60 * 60 * 48,
-            sameSite: 'none',
-        },
+        // cookie: {
+        //   httpOnly: true,
+        //   secure: true,
+        //   maxAge: 1000 * 60 * 60 * 48,
+        //   sameSite: 'none',
+        // },
         store: connect_mongo_1.default.create({
-            mongoUrl: `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@pm.bamwdsp.mongodb.net/?retryWrites=true&w=majority`,
+            mongoUrl: process.env.MONGO_SESSION_URI,
         }),
     }));
     app.use(passport_1.default.initialize());

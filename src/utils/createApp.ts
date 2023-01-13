@@ -38,7 +38,7 @@ export const createApp = (): Express => {
 
   // Enable parsing Middleware for Request
   app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
+  // app.use(express.urlencoded({ extended: true }));
 
   app.use(cookieParser());
 

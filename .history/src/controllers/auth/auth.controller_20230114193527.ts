@@ -20,7 +20,7 @@ export const authRegisterController = asyncHandler(
         email,
         apiKey: hashedApiKey,
       });
-      res.status(201).send({ message: 'Registration successful', apiKey });
+      res.status(201).send({ message: 'Registration successful' });
     }
   }
 );

@@ -15,6 +15,7 @@ router.post(
     if (req.user) {
       res.status(200).send({
         message: 'Successfully logged in',
+        user: req.user,
       });
     } else {
       res.status(401).send({ message: 'User not found' });

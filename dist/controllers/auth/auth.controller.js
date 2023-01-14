@@ -33,6 +33,6 @@ exports.authRegisterController = (0, express_async_handler_1.default)((req, res)
             email,
             apiKey: hashedApiKey,
         });
-        res.status(201).send({ apiKey, message: 'Registration successful' });
+        res.status(201).send({ message: 'Registration successful', apiKey });
     }
 }));

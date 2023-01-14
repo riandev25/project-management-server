@@ -19,7 +19,6 @@ const user_model_1 = require("../../models/user.model");
 const passwordHelper_1 = require("../../utils/passwordHelper");
 exports.createBoard = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const rawApiKey = String(req.headers['x-api-key']);
-    // const hashedApiKey = hashData(apiKey);
     const authenticate = yield user_model_1.User.findOne(req.user);
     const hashedApiKey = String(authenticate === null || authenticate === void 0 ? void 0 : authenticate.apiKey);
     const authenticateApikey = (0, passwordHelper_1.compareData)(rawApiKey, hashedApiKey);

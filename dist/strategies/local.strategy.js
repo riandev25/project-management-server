@@ -18,13 +18,10 @@ const user_model_1 = require("../models/user.model");
 const passwordHelper_1 = require("../utils/passwordHelper");
 passport_1.default.serializeUser((user, done) => {
     console.log('Serializing User...');
-    console.log(user);
     done(null, user);
-    // done(null, user);
 });
 passport_1.default.deserializeUser((id, done) => __awaiter(void 0, void 0, void 0, function* () {
     console.log('Deserializing User');
-    console.log(id);
     try {
         const user = yield user_model_1.User.findById(id, { email: 1, apiKey: 1 });
         if (!user)

@@ -10,7 +10,7 @@ export const createBoard = asyncHandler(async (req, res, next) => {
   const authenticateApikey = compareData(rawApiKey, hashedApiKey);
   if (authenticateApikey) {
     const board = await Board.insertMany({ ...req.body, apiKey: hashedApiKey });
-    res.status(201).send(board);
+    res.status(201).send({ board, user: req.user });
     next();
   }
 });

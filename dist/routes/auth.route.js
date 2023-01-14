@@ -11,7 +11,7 @@ const router = (0, express_1.Router)();
 // router.use(connectToSessions);
 router.post('/login', passport_1.default.authenticate('local'), (0, express_async_handler_1.default)((req, res) => {
     if (req.user) {
-        res.send(200).send({
+        res.status(200).send({
             message: 'Successfully logged in',
             session: req.session,
             user: req.user,

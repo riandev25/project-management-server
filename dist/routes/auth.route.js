@@ -8,12 +8,12 @@ const passport_1 = __importDefault(require("passport"));
 const auth_controller_1 = require("../controllers/auth/auth.controller");
 const router = (0, express_1.Router)();
 // router.use(connectToSessions);
-router.post('/login', (req, res, next) => {
-    if (req.user)
-        res.redirect('/login');
-    else
-        next();
-}, passport_1.default.authenticate('local', {
+router.post('/login', 
+// (req, res, next) => {
+//   if (req.user) res.redirect('/login');
+//   else next();
+// },
+passport_1.default.authenticate('local', {
     failureRedirect: '/login',
 }), 
 // async (req, res) => {

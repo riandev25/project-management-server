@@ -19,18 +19,10 @@ const express_async_handler_1 = __importDefault(require("express-async-handler")
 const router = (0, express_1.Router)();
 // router.use(connectToSessions);
 router.post('/login', (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    yield passport_1.default.authenticate('local', (err, user, info) => {
-        if (err || !user) {
-            res
-                .status(401)
-                .send({ status: 'failed', message: 'Authentication failed' });
-        }
-        else {
-            res
-                .status(200)
-                .send({ status: 'success', message: 'Logged in successful' });
-        }
-    });
+    yield passport_1.default.authenticate('local');
+    res
+        .status(200)
+        .send({ status: 'sucess', message: 'Logged in successfully' });
 })));
 router.post('/logout', (req, res, next) => {
     req.session.destroy((err) => {

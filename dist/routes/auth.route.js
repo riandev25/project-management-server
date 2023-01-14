@@ -10,7 +10,9 @@ const router = (0, express_1.Router)();
 // router.use(connectToSessions);
 router.post('/login', passport_1.default.authenticate('local'), (req, res) => {
     if (req.user) {
-        res.send(200).send({ data: req.user });
+        res
+            .send(200)
+            .send({ message: 'Successfully logged in', session: req.session });
     }
     else {
         res.status(401).send({ message: 'User not found' });

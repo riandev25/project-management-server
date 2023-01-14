@@ -49,7 +49,7 @@ passport_1.default.use(new passport_local_1.Strategy({
         const isValid = (0, passwordHelper_1.compareData)(password, user.password);
         if (isValid) {
             console.log('Authenticated Successfully!');
-            return done(null, { user });
+            return done(null, user);
         }
         else {
             console.log('Invalid Authentication');

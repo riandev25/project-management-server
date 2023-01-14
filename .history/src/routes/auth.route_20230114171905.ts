@@ -10,9 +10,7 @@ const router = Router();
 
 router.post('/login', passport.authenticate('local'), (req, res) => {
   if (req.user) {
-    res
-      .send(200)
-      .send({ message: 'Successfully logged in', session: req.session });
+    res.send(200).send({ data: req.user });
   } else {
     res.status(401).send({ message: 'User not found' });
   }

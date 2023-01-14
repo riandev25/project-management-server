@@ -8,21 +8,13 @@ const router = Router();
 
 // router.use(connectToSessions);
 
-router.post(
-  '/login',
-  passport.authenticate('local'),
-  asyncHandler((req, res) => {
-    if (req.user) {
-      res.send(200).send({
-        message: 'Successfully logged in',
-        session: req.session,
-        user: req.user,
-      });
-    } else {
-      res.status(401).send({ message: 'User not found' });
-    }
-  })
-);
+router.post('/login', passport.authenticate('local'), (req, res) => {
+  if (req.user) {
+    res.send(200).send({ message: req.user, session: req.session });
+  } else {
+    res.status(401).send({ message: 'User not found' });
+  }
+});
 
 router.post('/logout', (req, res, next) => {
   req.session.destroy((err) => {

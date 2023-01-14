@@ -10,18 +10,21 @@ const router = (0, express_1.Router)();
 // router.use(connectToSessions);
 router.post('/login', passport_1.default.authenticate('local'), (req, res) => {
     if (req.user) {
-        res
-            .status(200)
-            .send({ status: 'success', message: 'Logged in successfully' });
+        res.send(200).send({ data: req.user });
     }
     else {
-        res
-            .status(500)
-            .send({
-            status: 'failed',
-            message: 'User not found. Create first an account',
-        });
+        res.status(401).send({ message: 'User not found' });
     }
+});
+router.post('login', (req, res, next) => {
+    passport_1.default.authenticate('local', (err, user, options) => {
+        if (user) {
+            res.status(200).send({ user });
+        }
+        else {
+            res.status(401).send({ message: options.message });
+        }
+    });
 });
 router.post('/logout', (req, res, next) => {
     req.session.destroy((err) => {

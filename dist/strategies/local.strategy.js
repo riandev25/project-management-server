@@ -42,18 +42,18 @@ passport_1.default.use(new passport_local_1.Strategy({
 }, (email, password, done) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         if (!email || !password)
-            throw new Error('Missing Credentials');
-        const userDB = yield user_model_1.User.findOne({ email });
-        if (!userDB)
-            throw new Error('User not found');
-        const isValid = (0, passwordHelper_1.compareData)(password, userDB.password);
+            return done(null, false, { message: 'Invalid credentials' });
+        const user = yield user_model_1.User.findOne({ email });
+        if (!user)
+            return done(null, false, { message: 'User not found' });
+        const isValid = (0, passwordHelper_1.compareData)(password, user.password);
         if (isValid) {
             console.log('Authenticated Successfully!');
-            done(null, userDB);
+            return done(null, { user });
         }
         else {
             console.log('Invalid Authentication');
-            done(null, null);
+            done(null, false, { message: 'User not found' });
         }
     }
     catch (err) {

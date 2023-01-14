@@ -33,12 +33,12 @@ passport.use(
       try {
         if (!email || !password)
           return done(null, false, { message: 'Invalid credentials' });
-        const user = await User.findOne({ email });
-        if (!user) return done(null, false, { message: 'User not found' });
-        const isValid = compareData(password, user.password);
+        const userDB = await User.findOne({ email });
+        if (!userDB) return done(new Error('User not found'));
+        const isValid = compareData(password, userDB.password);
         if (isValid) {
           console.log('Authenticated Successfully!');
-          return done(null, { user });
+          done(null, userDB);
         } else {
           console.log('Invalid Authentication');
           done(null, false, { message: 'User not found' });

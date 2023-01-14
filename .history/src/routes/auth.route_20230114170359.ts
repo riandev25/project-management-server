@@ -16,16 +16,6 @@ router.post('/login', passport.authenticate('local'), (req, res) => {
   }
 });
 
-router.post('login', (req, res, next) => {
-  passport.authenticate('local', (err, user, options) => {
-    if (user) {
-      res.status(200).send({ user });
-    } else {
-      res.status(401).send({ message: options.message });
-    }
-  });
-});
-
 router.post('/logout', (req, res, next) => {
   req.session.destroy((err) => {
     if (err) return next(err);

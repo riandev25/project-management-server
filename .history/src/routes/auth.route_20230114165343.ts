@@ -8,23 +8,17 @@ const router = Router();
 
 // router.use(connectToSessions);
 
-router.post('/login', passport.authenticate('local'), (req, res) => {
-  if (req.user) {
-    res.send(200).send({ data: req.user });
-  } else {
-    res.status(401).send({ message: 'User not found' });
+router.post(
+  '/login',
+  passport.authenticate('local', (err, user, info) => {}),
+  (req, res) => {
+    // if (req.user) {
+    //   res.send(200).send({ data: req.user });
+    // } else {
+    //   res.status(401).send({ message: 'Unsuccessful' });
+    // }
   }
-});
-
-router.post('login', (req, res, next) => {
-  passport.authenticate('local', (err, user, options) => {
-    if (user) {
-      res.status(200).send({ user });
-    } else {
-      res.status(401).send({ message: options.message });
-    }
-  });
-});
+);
 
 router.post('/logout', (req, res, next) => {
   req.session.destroy((err) => {

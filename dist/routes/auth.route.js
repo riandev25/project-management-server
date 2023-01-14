@@ -15,7 +15,12 @@ router.post('/login', passport_1.default.authenticate('local'), (req, res) => {
             .send({ status: 'success', message: 'Logged in successfully' });
     }
     else {
-        res.status(401).send({ status: 'failed', message: 'User not found' });
+        res
+            .status(500)
+            .send({
+            status: 'failed',
+            message: 'User not found. Create first an account',
+        });
     }
 });
 router.post('/logout', (req, res, next) => {

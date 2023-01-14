@@ -8,16 +8,15 @@ const passport_1 = __importDefault(require("passport"));
 const auth_controller_1 = require("../controllers/auth/auth.controller");
 const router = (0, express_1.Router)();
 // router.use(connectToSessions);
-router.post('/login', passport_1.default.authenticate('local'), (req, res) => {
-    if (req.user) {
-        res
-            .send(200)
-            .send({ message: 'Successfully logged in', session: req.session });
-    }
-    else {
-        res.status(401).send({ message: 'User not found' });
-    }
-});
+// router.post('/login', passport.authenticate('local'), (req, res) => {
+//   if (req.user) {
+//     res
+//       .send(200)
+//       .send({ message: 'Successfully logged in', session: req.session });
+//   } else {
+//     res.status(401).send({ message: 'User not found' });
+//   }
+// });
 router.post('login', (req, res, next) => {
     passport_1.default.authenticate('local', (err, user, options) => {
         if (user) {

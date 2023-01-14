@@ -26,7 +26,7 @@ passport_1.default.deserializeUser((id, done) => __awaiter(void 0, void 0, void 
     console.log('Deserializing User');
     console.log(id);
     try {
-        const user = yield user_model_1.User.findById(id);
+        const user = yield user_model_1.User.findById(id, { email: 1, apiKey: 1 });
         if (!user)
             throw new Error('User not found');
         console.log(user);

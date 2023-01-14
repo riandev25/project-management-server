@@ -8,7 +8,7 @@ export const authRegisterController = asyncHandler(
   async (req: Request, res: Response) => {
     const { email } = req.body;
     // const apiKey: any = req.headers['api-key'];
-    const userDB = await User.findOne({ email });
+    const userDB = await User.findOne({ email }, { email: 1, apiKey: 1 });
     if (userDB) {
       res.status(400).send({ msg: 'User already exists!' });
     } else {

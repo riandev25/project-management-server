@@ -11,8 +11,10 @@ const router = Router();
 router.post(
   '/login',
   asyncHandler(async (req, res) => {
-    const result = await passport.authenticate('local');
-    res.status(200).send({ status: 'success', message: result });
+    await passport.authenticate('local');
+    res
+      .status(200)
+      .send({ status: 'success', message: 'Logged in successfully' });
   })
 );
 

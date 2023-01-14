@@ -9,9 +9,14 @@ const auth_controller_1 = require("../controllers/auth/auth.controller");
 const router = (0, express_1.Router)();
 // router.use(connectToSessions);
 router.post('/login', passport_1.default.authenticate('local'), (req, res) => {
-    res
-        .status(200)
-        .send({ status: 'success', message: 'Logged in successfully' });
+    if (req.user) {
+        res
+            .status(200)
+            .send({ status: 'success', message: 'Logged in successfully' });
+    }
+    else {
+        res.status(401).send({ status: 'failed', message: 'User not found' });
+    }
 });
 router.post('/logout', (req, res, next) => {
     req.session.destroy((err) => {

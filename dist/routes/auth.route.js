@@ -13,6 +13,7 @@ router.post('/login', passport_1.default.authenticate('local'), (0, express_asyn
     if (req.user) {
         res.status(200).send({
             message: 'Successfully logged in',
+            user: req.user,
         });
     }
     else {

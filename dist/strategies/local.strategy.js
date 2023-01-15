@@ -41,12 +41,13 @@ passport_1.default.use(new passport_local_1.Strategy({
         if (!email || !password)
             return done(null, false, { message: 'Invalid credentials' });
         const user = yield user_model_1.User.findOne({ email });
+        const newUser = { email: user === null || user === void 0 ? void 0 : user.email, apiKey: user === null || user === void 0 ? void 0 : user.apiKey };
         if (!user)
             return done(null, false, { message: 'User not found' });
         const isValid = (0, passwordHelper_1.compareData)(password, user.password);
         if (isValid) {
             console.log('Authenticated Successfully!');
-            return done(null, user);
+            return done(null, newUser);
         }
         else {
             console.log('Invalid Authentication');

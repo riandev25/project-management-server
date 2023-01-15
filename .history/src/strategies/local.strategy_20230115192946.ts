@@ -36,7 +36,7 @@ passport.use(
         const isValid = compareData(password, user.password);
         if (isValid) {
           console.log('Authenticated Successfully!');
-          return done(null, { email: user.email, apiKey: user.apiKey });
+          return done(null, user);
         } else {
           console.log('Invalid Authentication');
           done(null, false, { message: 'User not found' });

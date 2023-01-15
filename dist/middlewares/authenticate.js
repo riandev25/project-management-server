@@ -15,14 +15,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.authenticateUser = void 0;
 const express_async_handler_1 = __importDefault(require("express-async-handler"));
 const user_model_1 = require("../models/user.model");
-const passwordHelper_1 = require("../utils/passwordHelper");
+// export const authenticateUser = asyncHandler(
+//   async (req: Request, res: Response, next: NextFunction) => {
+//     console.log('inside auth check middleware');
+//     const rawApiKey = String(req.headers['x-api-key']);
+//     const authenticate = await User.findOne(req.user);
+//     const hashApikey = String(authenticate?.apiKey);
+//     const authenticateApikey = compareData(rawApiKey, hashApikey);
+//     if (req.user && authenticateApikey) {
+//       next();
+//     } else res.send(401);
+//   }
+// );
 exports.authenticateUser = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     console.log('inside auth check middleware');
-    const rawApiKey = String(req.headers['x-api-key']);
+    const apiKey = String(req.headers['x-api-key']);
     const authenticate = yield user_model_1.User.findOne(req.user);
-    const hashApikey = String(authenticate === null || authenticate === void 0 ? void 0 : authenticate.apiKey);
-    const authenticateApikey = (0, passwordHelper_1.compareData)(rawApiKey, hashApikey);
-    if (req.user && authenticateApikey) {
+    const savedApikey = String(authenticate === null || authenticate === void 0 ? void 0 : authenticate.apiKey);
+    if (req.user && apiKey === savedApikey) {
         next();
     }
     else

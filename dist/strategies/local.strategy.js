@@ -41,13 +41,12 @@ passport_1.default.use(new passport_local_1.Strategy({
         if (!email || !password)
             return done(null, false, { message: 'Invalid credentials' });
         const user = yield user_model_1.User.findOne({ email });
-        const newUser = { email: user === null || user === void 0 ? void 0 : user.email, apiKey: user === null || user === void 0 ? void 0 : user.apiKey };
         if (!user)
             return done(null, false, { message: 'User not found' });
         const isValid = (0, passwordHelper_1.compareData)(password, user.password);
         if (isValid) {
             console.log('Authenticated Successfully!');
-            return done(null, newUser);
+            return done(null, { email: user.email, apiKey: user.apiKey });
         }
         else {
             console.log('Invalid Authentication');
@@ -59,3 +58,34 @@ passport_1.default.use(new passport_local_1.Strategy({
         done(err, null);
     }
 })));
+// passport.use(
+//   new Strategy(
+//     {
+//       usernameField: 'email',
+//     },
+//     async (email, password, done) => {
+//       try {
+//         if (!email || !password)
+//           return done(null, false, { message: 'Invalid credentials' });
+//         const user = await User.findOne({ email });
+//         if (!user) return done(null, false, { message: 'User not found' });
+//         if (user?.apiKey === undefined) {
+//           const apiKey = generateApiKey({ method: 'string', length: 32 });
+//           const hashedApiKey = hashData(String(apiKey));
+//           await User.updateOne({email}, {$set: {apiKey: hashedApiKey}} )
+//         }
+//         const isValid = compareData(password, user.password);
+//         if (isValid) {
+//           console.log('Authenticated Successfully!');
+//           return done(null, user);
+//         } else {
+//           console.log('Invalid Authentication');
+//           done(null, false, { message: 'User not found' });
+//         }
+//       } catch (err) {
+//         console.log(err);
+//         done(err, null);
+//       }
+//     }
+//   )
+// );

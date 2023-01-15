@@ -17,6 +17,26 @@ const passwordHelper_1 = require("../../utils/passwordHelper");
 const user_model_1 = require("../../models/user.model");
 const generate_api_key_1 = require("generate-api-key");
 const express_async_handler_1 = __importDefault(require("express-async-handler"));
+// export const authRegisterController = asyncHandler(
+//   async (req: Request, res: Response) => {
+//     const { email } = req.body;
+//     // const apiKey: any = req.headers['api-key'];
+//     const userDB = await User.findOne({ email });
+//     if (userDB) {
+//       res.status(400).send({ msg: 'User already exists!' });
+//     } else {
+//       const password = hashData(req.body.password);
+//       const apiKey = generateApiKey({ method: 'string', length: 32 });
+//       const hashedApiKey = hashData(String(apiKey));
+//       const newUser = await User.create({
+//         password,
+//         email,
+//         apiKey: hashedApiKey,
+//       });
+//       res.status(201).send({ message: 'Registration successful', apiKey });
+//     }
+//   }
+// );
 exports.authRegisterController = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email } = req.body;
     // const apiKey: any = req.headers['api-key'];
@@ -27,12 +47,11 @@ exports.authRegisterController = (0, express_async_handler_1.default)((req, res)
     else {
         const password = (0, passwordHelper_1.hashData)(req.body.password);
         const apiKey = (0, generate_api_key_1.generateApiKey)({ method: 'string', length: 32 });
-        const hashedApiKey = (0, passwordHelper_1.hashData)(String(apiKey));
         const newUser = yield user_model_1.User.create({
-            password,
             email,
-            apiKey: hashedApiKey,
+            password,
+            apiKey,
         });
-        res.status(201).send({ message: 'Registration successful', apiKey });
+        res.status(201).send({ message: 'Registration successful' });
     }
 }));

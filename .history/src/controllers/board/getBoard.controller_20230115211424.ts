@@ -11,14 +11,15 @@ export const getBoard = asyncHandler(async (req, res, next) => {
   // const authenticateApikey = compareData(rawApiKey, hashedApiKey);
 
   // Query
-  const query = { apiKey: [...apiKey] };
+  const query = { apiKey };
 
   // Returned Data
   const returned = { apiKey: 0 };
 
-  if (apiKey) {
+  if (authenticateApikey) {
     const board = await Board.find(query, returned);
     res.status(201).send(board);
     next();
   }
+  next();
 });

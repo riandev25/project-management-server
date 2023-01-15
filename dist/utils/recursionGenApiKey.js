@@ -12,22 +12,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getBoard = void 0;
-const express_async_handler_1 = __importDefault(require("express-async-handler"));
-const board_model_1 = require("../../models/board.model");
-exports.getBoard = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const apiKey = String(req.headers['x-api-key']);
-    // const hashedApiKey = hashData(apiKey);
-    // const authenticate = await User.findOne(req.user);
-    // const hashedApiKey = String(authenticate?.apiKey);
-    // const authenticateApikey = compareData(rawApiKey, hashedApiKey);
-    // Query
-    const query = { apiKey: [...apiKey] };
-    // Returned Data
-    const returned = { apiKey: 0 };
-    if (apiKey) {
-        const board = yield board_model_1.Board.find(query, returned);
-        res.status(201).send(board);
-        next();
+exports.recursionGenApiKey = void 0;
+const generate_api_key_1 = __importDefault(require("generate-api-key"));
+const user_model_1 = require("../models/user.model");
+const recursionGenApiKey = () => __awaiter(void 0, void 0, void 0, function* () {
+    const apiKey = (0, generate_api_key_1.default)({ method: 'string', length: 32 });
+    const user = yield user_model_1.User.findOne({ apiKey });
+    if (user) {
+        return apiKey;
     }
-}));
+    return (0, exports.recursionGenApiKey)();
+});
+exports.recursionGenApiKey = recursionGenApiKey;

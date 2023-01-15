@@ -15,15 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createBoard = void 0;
 const express_async_handler_1 = __importDefault(require("express-async-handler"));
 const board_model_1 = require("../../models/board.model");
-const user_model_1 = require("../../models/user.model");
-const passwordHelper_1 = require("../../utils/passwordHelper");
 exports.createBoard = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const rawApiKey = String(req.headers['x-api-key']);
-    const authenticate = yield user_model_1.User.findOne(req.user);
-    const hashedApiKey = String(authenticate === null || authenticate === void 0 ? void 0 : authenticate.apiKey);
-    const authenticateApikey = (0, passwordHelper_1.compareData)(rawApiKey, hashedApiKey);
-    if (authenticateApikey) {
-        const board = yield board_model_1.Board.insertMany(Object.assign(Object.assign({}, req.body), { apiKey: hashedApiKey }));
+    const headerApiKey = String(req.headers['x-api-key']);
+    if (headerApiKey) {
+        const board = yield board_model_1.Board.insertMany(Object.assign(Object.assign({}, req.body), { apiKey: [headerApiKey] }));
         res.status(201).send(board);
         next();
     }

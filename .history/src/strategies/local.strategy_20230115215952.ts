@@ -1,5 +1,4 @@
 import generateApiKey from 'generate-api-key';
-import { ObjectId } from 'mongodb';
 import passport from 'passport';
 import { Strategy } from 'passport-local';
 import { User } from '../models/user.model';
@@ -37,11 +36,7 @@ passport.use(
         const isValid = compareData(password, user.password);
         if (isValid) {
           console.log('Authenticated Successfully!');
-          return done(null, {
-            _id: new ObjectId(user._id),
-            email: user.email,
-            apiKey: user.apiKey,
-          });
+          return done(null, user);
         } else {
           console.log('Invalid Authentication');
           done(null, false, { message: 'User not found' });

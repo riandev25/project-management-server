@@ -6,7 +6,7 @@ export const createBoard = asyncHandler(async (req, res, next) => {
   if (headerApiKey) {
     const board = await Board.insertMany({
       ...req.body,
-      apiKey: headerApiKey,
+      apiKey: [...headerApiKey],
     });
     res.status(201).send(board);
     next();

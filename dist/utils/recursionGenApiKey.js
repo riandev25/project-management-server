@@ -18,7 +18,7 @@ const user_model_1 = require("../models/user.model");
 const recursionGenApiKey = () => __awaiter(void 0, void 0, void 0, function* () {
     const apiKey = (0, generate_api_key_1.default)({ method: 'string', length: 32 });
     const user = yield user_model_1.User.findOne({ apiKey });
-    if (user) {
+    if (!user) {
         return apiKey;
     }
     return (0, exports.recursionGenApiKey)();

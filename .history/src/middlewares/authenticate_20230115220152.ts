@@ -20,8 +20,8 @@ export const authenticateUser = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     console.log('inside auth check middleware');
     const apiKey = String(req.headers['x-api-key']);
-    const authenticate = await User.findOne(req.user);
-    const savedApikey = String(authenticate?.apiKey);
+    // const authenticate = await User.findOne(req.user);
+    // const savedApikey = String(authenticate?.apiKey);
     if (req.user && apiKey) {
       next();
     } else res.send(401);

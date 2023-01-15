@@ -15,8 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.authRegisterController = void 0;
 const passwordHelper_1 = require("../../utils/passwordHelper");
 const user_model_1 = require("../../models/user.model");
+const generate_api_key_1 = require("generate-api-key");
 const express_async_handler_1 = __importDefault(require("express-async-handler"));
-const recursionGenApiKey_1 = require("../../utils/recursionGenApiKey");
 // export const authRegisterController = asyncHandler(
 //   async (req: Request, res: Response) => {
 //     const { email } = req.body;
@@ -46,7 +46,8 @@ exports.authRegisterController = (0, express_async_handler_1.default)((req, res)
     }
     else {
         const password = (0, passwordHelper_1.hashData)(req.body.password);
-        const apiKey = (0, recursionGenApiKey_1.recursionGenApiKey)();
+        // const apiKey = recursionGenApiKey();
+        const apiKey = (0, generate_api_key_1.generateApiKey)({ method: 'string', length: 32 });
         const newUser = yield user_model_1.User.create({
             email,
             password,

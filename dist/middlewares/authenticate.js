@@ -32,7 +32,7 @@ exports.authenticateUser = (0, express_async_handler_1.default)((req, res, next)
     const apiKey = String(req.headers['x-api-key']);
     const authenticate = yield user_model_1.User.findOne(req.user);
     const savedApikey = String(authenticate === null || authenticate === void 0 ? void 0 : authenticate.apiKey);
-    if (req.user && apiKey === savedApikey) {
+    if (req.user && apiKey) {
         next();
     }
     else

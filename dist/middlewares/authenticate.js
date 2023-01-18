@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.authenticateUser = void 0;
 const express_async_handler_1 = __importDefault(require("express-async-handler"));
-const user_model_1 = require("../models/user.model");
 // export const authenticateUser = asyncHandler(
 //   async (req: Request, res: Response, next: NextFunction) => {
 //     console.log('inside auth check middleware');
@@ -30,8 +29,8 @@ const user_model_1 = require("../models/user.model");
 exports.authenticateUser = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     console.log('inside auth check middleware');
     const apiKey = String(req.headers['x-api-key']);
-    const authenticate = yield user_model_1.User.findOne(req.user);
-    const savedApikey = String(authenticate === null || authenticate === void 0 ? void 0 : authenticate.apiKey);
+    // const authenticate = await User.findOne(req.user);
+    // const savedApikey = String(authenticate?.apiKey);
     if (req.user && apiKey) {
         next();
     }

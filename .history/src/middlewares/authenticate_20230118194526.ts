@@ -22,6 +22,7 @@ export const authenticateUser = asyncHandler(
     const apiKey = String(req.headers['x-api-key']);
     // const authenticate = await User.findOne(req.user);
     // const savedApikey = String(authenticate?.apiKey);
+    console.log(req.s);
     if (req.user && apiKey) {
       next();
     } else res.send(401);

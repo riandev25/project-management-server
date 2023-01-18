@@ -41,7 +41,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const app = (0, createApp_1.createApp)();
         // connectToMongoDB();
-        app.listen(PORT, () => console.log(`Running on Port ${PORT}`));
+        // app.listen(PORT, () => console.log(`Running on Port ${PORT}`));
     }
     catch (error) {
         console.log(error);

@@ -42,37 +42,37 @@ export const createApp = (): Express => {
 
   app.use(cookieParser());
 
-  if (process.env.NODE_ENV === 'production') {
-    app.use(
-      session({
-        secret: 'session',
-        resave: false,
-        saveUninitialized: false,
-        cookie: {
-          // sameSite: 'none',
-          secure: true,
-          maxAge: 30 * 24 * 60 * 60 * 1000,
-        },
-        store: MongoStore.create({
-          mongoUrl: process.env.MONGO_SESSION_URI,
-        }),
-      })
-    );
-  } else {
-    app.use(
-      session({
-        secret: 'session',
-        resave: false,
-        saveUninitialized: false,
-        cookie: {
-          maxAge: 30 * 24 * 60 * 60 * 1000,
-        },
-        store: MongoStore.create({
-          mongoUrl: process.env.MONGO_SESSION_URI,
-        }),
-      })
-    );
-  }
+    if (process.env.NODE_ENV === 'production') {
+      app.use(
+        session({
+          secret: 'session',
+          resave: false,
+          saveUninitialized: false,
+          cookie: {
+            sameSite: 'none',
+            secure: true,
+            maxAge: 30 * 24 * 60 * 60 * 1000,
+          },
+          store: MongoStore.create({
+            mongoUrl: process.env.MONGO_SESSION_URI,
+          }),
+        })
+      );
+    } else {
+      app.use(
+        session({
+          secret: 'session',
+          resave: false,
+          saveUninitialized: false,
+          cookie: {
+            maxAge: 30 * 24 * 60 * 60 * 1000,
+          },
+          store: MongoStore.create({
+            mongoUrl: process.env.MONGO_SESSION_URI,
+          }),
+        })
+      );
+    }
 
   app.use(passport.initialize());
   app.use(passport.session());

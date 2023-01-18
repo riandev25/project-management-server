@@ -58,19 +58,34 @@ const createApp = () => {
     app.use(express_1.default.json());
     // app.use(express.urlencoded({ extended: true }));
     app.use((0, cookie_parser_1.default)());
-    app.use((0, express_session_1.default)({
-        secret: 'session',
-        resave: false,
-        saveUninitialized: false,
-        cookie: {
-            sameSite: 'none',
-            secure: true,
-            maxAge: 30 * 24 * 60 * 60 * 1000,
-        },
-        store: connect_mongo_1.default.create({
-            mongoUrl: process.env.MONGO_SESSION_URI,
-        }),
-    }));
+    if (process.env.NODE_ENV === 'production') {
+        app.use((0, express_session_1.default)({
+            secret: 'session',
+            resave: false,
+            saveUninitialized: false,
+            cookie: {
+                // sameSite: 'none',
+                secure: true,
+                maxAge: 30 * 24 * 60 * 60 * 1000,
+            },
+            store: connect_mongo_1.default.create({
+                mongoUrl: process.env.MONGO_SESSION_URI,
+            }),
+        }));
+    }
+    else {
+        app.use((0, express_session_1.default)({
+            secret: 'session',
+            resave: false,
+            saveUninitialized: false,
+            cookie: {
+                maxAge: 30 * 24 * 60 * 60 * 1000,
+            },
+            store: connect_mongo_1.default.create({
+                mongoUrl: process.env.MONGO_SESSION_URI,
+            }),
+        }));
+    }
     app.use(passport_1.default.initialize());
     app.use(passport_1.default.session());
     app.use('/api', routes_1.default);

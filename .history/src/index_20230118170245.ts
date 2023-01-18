@@ -12,8 +12,7 @@ const main = async () => {
     const app = createApp();
     app.listen(PORT, () => console.log(`Running on Port ${PORT}`));
   } catch (error) {
-    console.error(error);
-    process.exit(1);
+    console.log(error);
   }
 };
 

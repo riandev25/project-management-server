@@ -112,8 +112,8 @@ const createApp = () => __awaiter(void 0, void 0, void 0, function* () {
         //   next();
         // });
         const PORT = process.env.PORT || 3001;
-        app.listen(PORT, () => console.log(`Running on Port ${PORT}`));
         app.use('/api', routes_1.default);
+        app.listen(PORT, () => console.log(`Running on Port ${PORT}`));
         return app;
     }
     catch (err) {

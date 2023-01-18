@@ -32,7 +32,7 @@ passport_1.default.deserializeUser((id, done) => __awaiter(void 0, void 0, void 
     }
     catch (err) {
         console.log(err);
-        done(err, null);
+        done(err, false);
     }
 }));
 passport_1.default.use(new passport_local_1.Strategy({

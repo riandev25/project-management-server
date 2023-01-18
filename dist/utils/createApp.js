@@ -64,7 +64,7 @@ const createApp = () => {
             resave: false,
             saveUninitialized: false,
             cookie: {
-                // sameSite: 'none',
+                sameSite: 'none',
                 secure: true,
                 maxAge: 30 * 24 * 60 * 60 * 1000,
             },
@@ -79,6 +79,7 @@ const createApp = () => {
             resave: false,
             saveUninitialized: false,
             cookie: {
+                secure: true,
                 maxAge: 30 * 24 * 60 * 60 * 1000,
             },
             store: connect_mongo_1.default.create({

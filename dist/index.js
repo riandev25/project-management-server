@@ -37,7 +37,7 @@ const createApp_1 = require("./utils/createApp");
 dotenv.config();
 const PORT = process.env.PORT || 3001;
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(`Running in ${process.env.ENVIRONMENT} mode.`);
+    console.log(`Running in ${process.env.NODE_ENV} mode.`);
     try {
         const app = (0, createApp_1.createApp)();
         app.listen(PORT, () => console.log(`Running on Port ${PORT}`));

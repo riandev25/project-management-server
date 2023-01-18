@@ -60,7 +60,7 @@ passport_1.default.use(new passport_local_1.Strategy({
     }
     catch (err) {
         console.log(err);
-        done(err, null);
+        done(err, false);
     }
 })));
 // passport.use(

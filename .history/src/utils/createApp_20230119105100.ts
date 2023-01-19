@@ -49,10 +49,8 @@ export const createApp = (): Express => {
         resave: false,
         saveUninitialized: false,
         cookie: {
-          // sameSite: 'none',
-          domain: 'localhost',
-          httpOnly: true,
-          secure: false,
+          sameSite: 'none',
+          secure: true,
           maxAge: 30 * 24 * 60 * 60 * 1000,
         },
         store: MongoStore.create({
@@ -67,8 +65,7 @@ export const createApp = (): Express => {
         resave: false,
         saveUninitialized: false,
         cookie: {
-          // domain: 'localhost',
-          secure: false,
+          secure: true,
           maxAge: 30 * 24 * 60 * 60 * 1000,
         },
         store: MongoStore.create({

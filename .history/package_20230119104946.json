@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node ./dist/index.js",
-    "dev": "cross-env NODE_ENV=development nodemon ./src/index.ts",
+    "start": "NODE_ENV=production node ./dist/index.js",
+    "dev": "NODE_ENV=development nodemon ./src/index.ts",
     "build": "tsc",
     "test": "jest",
     "prod": "pm2 start ./ecosystem.config.js"
@@ -42,7 +42,6 @@
     "connect-mongo": "^4.6.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
-    "cross-env": "^7.0.3",
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
     "express-session": "^1.17.3",

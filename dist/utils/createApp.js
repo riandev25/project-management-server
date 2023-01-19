@@ -59,14 +59,15 @@ const createApp = () => {
     // app.use(express.urlencoded({ extended: true }));
     app.use((0, cookie_parser_1.default)());
     if (process.env.NODE_ENV === 'production') {
-        app.set('trust proxy', 1);
         app.use((0, express_session_1.default)({
             secret: 'session',
             resave: false,
             saveUninitialized: false,
             cookie: {
-                sameSite: 'none',
-                secure: true,
+                // sameSite: 'none',
+                domain: 'localhost',
+                httpOnly: true,
+                secure: false,
                 maxAge: 30 * 24 * 60 * 60 * 1000,
             },
             store: connect_mongo_1.default.create({
@@ -80,7 +81,8 @@ const createApp = () => {
             resave: false,
             saveUninitialized: false,
             cookie: {
-                secure: true,
+                // domain: 'localhost',
+                secure: false,
                 maxAge: 30 * 24 * 60 * 60 * 1000,
             },
             store: connect_mongo_1.default.create({

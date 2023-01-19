@@ -4,7 +4,7 @@ exports.proxyMiddlware = void 0;
 const http_proxy_middleware_1 = require("http-proxy-middleware");
 const proxyMiddlware = (req, res, next) => {
     const proxyOptions = {
-        target: 'http://localhost:3000',
+        target: 'https://taskaccio.onrender.com',
         changeOrigin: true,
     };
     (0, http_proxy_middleware_1.createProxyMiddleware)(proxyOptions);

@@ -8,6 +8,7 @@ import passport from 'passport';
 import cookieParser from 'cookie-parser';
 import MongoStore from 'connect-mongo';
 import routes from '../routes/routes';
+import { createProxyMiddleware, Filter, Options } from 'http-proxy-middleware';
 import '../strategies/local.strategy';
 import * as dotenv from 'dotenv';
 import '../utils/cloudinary';

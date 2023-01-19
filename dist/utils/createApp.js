@@ -64,7 +64,6 @@ const createApp = () => {
     //   changeOrigin: true
     // };
     // const apiProxy = createProxyMiddleware(proxyOptions) as any
-    app.use('/api', proxyMiddleware_1.proxyMiddlware);
     if (process.env.NODE_ENV === 'production') {
         app.use((0, express_session_1.default)({
             secret: 'session',
@@ -99,7 +98,7 @@ const createApp = () => {
     }
     app.use(passport_1.default.initialize());
     app.use(passport_1.default.session());
-    app.use('/api', routes_1.default);
+    app.use('/api', proxyMiddleware_1.proxyMiddlware, routes_1.default);
     return app;
 };
 exports.createApp = createApp;

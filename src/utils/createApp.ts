@@ -49,7 +49,7 @@ export const createApp = (): Express => {
         resave: false,
         saveUninitialized: false,
         cookie: {
-          sameSite: 'lax',
+          sameSite: 'none',
           domain: '',
           httpOnly: true,
           secure: false,

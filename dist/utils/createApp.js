@@ -64,7 +64,7 @@ const createApp = () => {
             resave: false,
             saveUninitialized: false,
             cookie: {
-                // sameSite: 'none',
+                sameSite: 'lax',
                 domain: '',
                 httpOnly: true,
                 secure: false,

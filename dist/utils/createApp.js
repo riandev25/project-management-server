@@ -65,7 +65,7 @@ const createApp = () => {
             saveUninitialized: false,
             cookie: {
                 // sameSite: 'none',
-                domain: 'localhost',
+                domain: '',
                 httpOnly: true,
                 secure: false,
                 maxAge: 30 * 24 * 60 * 60 * 1000,

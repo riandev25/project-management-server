@@ -38,6 +38,7 @@ const routes_1 = __importDefault(require("../routes/routes"));
 require("../strategies/local.strategy");
 const dotenv = __importStar(require("dotenv"));
 require("../utils/cloudinary");
+const proxyMiddleware_1 = require("../middlewares/proxyMiddleware");
 const createApp = () => {
     dotenv.config();
     const app = (0, express_1.default)();
@@ -58,6 +59,12 @@ const createApp = () => {
     app.use(express_1.default.json());
     // app.use(express.urlencoded({ extended: true }));
     app.use((0, cookie_parser_1.default)());
+    // const proxyOptions = {
+    //   target: 'http://www.example.org',
+    //   changeOrigin: true
+    // };
+    // const apiProxy = createProxyMiddleware(proxyOptions) as any
+    app.use('/api', proxyMiddleware_1.proxyMiddlware);
     if (process.env.NODE_ENV === 'production') {
         app.use((0, express_session_1.default)({
             secret: 'session',

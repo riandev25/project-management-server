@@ -38,7 +38,6 @@ const routes_1 = __importDefault(require("../routes/routes"));
 require("../strategies/local.strategy");
 const dotenv = __importStar(require("dotenv"));
 require("../utils/cloudinary");
-const proxyMiddleware_1 = require("../middlewares/proxyMiddleware");
 const createApp = () => {
     dotenv.config();
     const app = (0, express_1.default)();
@@ -98,7 +97,7 @@ const createApp = () => {
     }
     app.use(passport_1.default.initialize());
     app.use(passport_1.default.session());
-    app.use('/api', proxyMiddleware_1.proxyMiddlware, routes_1.default);
+    app.use('/api', routes_1.default);
     return app;
 };
 exports.createApp = createApp;

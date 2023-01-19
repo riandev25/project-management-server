@@ -11,6 +11,7 @@ import routes from '../routes/routes';
 import '../strategies/local.strategy';
 import * as dotenv from 'dotenv';
 import '../utils/cloudinary';
+import { proxyMiddlware } from '../middlewares/proxyMiddleware';
 
 export const createApp = (): Express => {
   dotenv.config();

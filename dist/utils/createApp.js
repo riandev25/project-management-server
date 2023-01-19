@@ -74,7 +74,7 @@ const createApp = () => {
                 sameSite: 'none',
                 domain: '',
                 httpOnly: true,
-                secure: false,
+                secure: true,
                 maxAge: 30 * 24 * 60 * 60 * 1000,
             },
             store: connect_mongo_1.default.create({

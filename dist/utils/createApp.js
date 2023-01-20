@@ -63,37 +63,21 @@ const createApp = () => {
     //   changeOrigin: true
     // };
     // const apiProxy = createProxyMiddleware(proxyOptions) as any
-    if (process.env.NODE_ENV === 'production') {
-        app.use((0, express_session_1.default)({
-            secret: 'session',
-            resave: false,
-            saveUninitialized: false,
-            cookie: {
-                sameSite: 'none',
-                httpOnly: true,
-                secure: true,
-                maxAge: 30 * 24 * 60 * 60 * 1000,
-            },
-            store: connect_mongo_1.default.create({
-                mongoUrl: process.env.MONGO_SESSION_URI,
-            }),
-        }));
-    }
-    else {
-        app.use((0, express_session_1.default)({
-            secret: 'session',
-            resave: false,
-            saveUninitialized: false,
-            cookie: {
-                // domain: 'localhost',
-                secure: false,
-                maxAge: 30 * 24 * 60 * 60 * 1000,
-            },
-            store: connect_mongo_1.default.create({
-                mongoUrl: process.env.MONGO_SESSION_URI,
-            }),
-        }));
-    }
+    app.set('trust proxy', 1);
+    app.use((0, express_session_1.default)({
+        secret: 'session',
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production' ? true : false,
+            maxAge: 30 * 24 * 60 * 60 * 1000,
+        },
+        store: connect_mongo_1.default.create({
+            mongoUrl: process.env.MONGO_SESSION_URI,
+        }),
+    }));
     app.use(passport_1.default.initialize());
     app.use(passport_1.default.session());
     app.use('/api', routes_1.default);

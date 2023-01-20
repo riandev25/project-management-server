@@ -73,7 +73,9 @@ const createApp = () => {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production' ? true : false,
             maxAge: 30 * 24 * 60 * 60 * 1000,
+            domain: 'localhost',
         },
+        proxy: true,
         store: connect_mongo_1.default.create({
             mongoUrl: process.env.MONGO_SESSION_URI,
         }),

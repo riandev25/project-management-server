@@ -32,7 +32,6 @@ const cors_1 = __importDefault(require("cors"));
 const compression_1 = __importDefault(require("compression"));
 const express_session_1 = __importDefault(require("express-session"));
 const passport_1 = __importDefault(require("passport"));
-const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const connect_mongo_1 = __importDefault(require("connect-mongo"));
 const routes_1 = __importDefault(require("../routes/routes"));
 require("../strategies/local.strategy");
@@ -57,7 +56,6 @@ const createApp = () => {
     // Enable parsing Middleware for Request
     app.use(express_1.default.json());
     // app.use(express.urlencoded({ extended: true }));
-    app.use((0, cookie_parser_1.default)());
     // const proxyOptions = {
     //   target: 'http://www.example.org',
     //   changeOrigin: true

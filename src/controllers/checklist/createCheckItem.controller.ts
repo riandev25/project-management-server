@@ -31,6 +31,7 @@ export const createCheckItem = asyncHandler(async (req, res, next) => {
     ...req.body,
     idChecklist: id,
     isChecked: false,
+    hasDueDate: false,
   };
 
   const checkItem = await CheckItem.insertMany(update);

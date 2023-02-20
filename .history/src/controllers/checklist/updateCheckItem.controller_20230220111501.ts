@@ -31,7 +31,7 @@ export const updateCheckItem = asyncHandler(async (req, res, next) => {
 
   // const dates = getSpecificDateTime(dueDate);
 
-  console.log(isChecked);
+  console.log(hasDueDate);
   const query = { _id: new ObjectId(idCheckItem) };
   const updateIsChecked = { $set: { isChecked } };
   const updateIsCheckedDueDate = {
@@ -45,15 +45,15 @@ export const updateCheckItem = asyncHandler(async (req, res, next) => {
       remainingSeconds: '',
       pickedDueDate: '',
     },
-    $set: { hasDueDate, isChecked },
+    $set: { hasDueDate },
   };
 
   // const update = isChecked === false && !dueDate ? { $set: {...dates, isChecked} } : { $unset: { remainingDays: '', remainingHours: '', remainingMinutes: '', remainingSeconds: '', isDueDate: '' }, hasDueDate: false }
 
   let update;
-  if (hasDueDate !== undefined) {
+  if (hasDueDate) {
     if (hasDueDate === true && dueDate) update = updateIsCheckedDueDate;
-    else update = updateRemoveDueDate;
+    else update = { ...updateIsChecked, ...updateRemoveDueDate };
   } else {
     update = updateIsChecked;
     if (dueDate) update = updateIsCheckedDueDate;

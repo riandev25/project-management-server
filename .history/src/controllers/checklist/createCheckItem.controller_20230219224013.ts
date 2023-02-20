@@ -3,16 +3,16 @@ import { CheckItem } from '../../models/checklist.model';
 
 export const createCheckItem = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
-  const { pos, checked } = req.query;
+  // const { pos, checked } = req.query;
 
-  Number(pos);
+  // Number(pos);
 
-  const checkQueryParam = () => {
-    if (checked === 'true') return true;
-    else return false;
-  };
+  // const checkQueryParam = () => {
+  //   if (checked === 'true') return true;
+  //   else return false;
+  // };
 
-  const checkedParam = checkQueryParam();
+  // const checkedParam = checkQueryParam();
 
   // // With pos query
   // const updateWithPos = {
@@ -30,8 +30,8 @@ export const createCheckItem = asyncHandler(async (req, res, next) => {
   const update = {
     ...req.body,
     idChecklist: id,
-    isChecked: checkedParam,
-    pos,
+    isChecked: false,
+    hasDueDate: false,
   };
 
   const checkItem = await CheckItem.insertMany(update);

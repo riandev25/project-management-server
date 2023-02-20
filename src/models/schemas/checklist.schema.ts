@@ -8,6 +8,13 @@ export const checkItemSchema = new Schema({
   pos: { type: Number, required: true },
   idChecklist: { type: String, required: true },
   idCard: { type: String, required: true },
+  hasDueDate: { type: Boolean, required: true },
+  remainingDays: { type: Number },
+  remainingHours: { type: Number },
+  remainingMinutes: { type: Number },
+  remainingSeconds: { type: Number },
+  isDueDate: { type: Boolean },
+  pickedDueDate: { type: Date },
 });
 
 export const checklistSchema = new Schema({

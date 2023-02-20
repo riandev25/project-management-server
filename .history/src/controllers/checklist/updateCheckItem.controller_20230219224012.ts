@@ -27,36 +27,31 @@ export const updateCheckItem = asyncHandler(async (req, res, next) => {
   //   return optionalUpdate;
   // };
 
-  const { dueDate, isChecked, hasDueDate, pickedDueDate } = req.body;
+  const { dueDate, isChecked, hasDueDate } = req.body;
 
-  // const dates = getSpecificDateTime(dueDate);
+  const dates = getSpecificDateTime(dueDate);
 
-  console.log(isChecked);
   const query = { _id: new ObjectId(idCheckItem) };
   const updateIsChecked = { $set: { isChecked } };
-  const updateIsCheckedDueDate = {
-    $set: { ...dueDate, pickedDueDate, isChecked, hasDueDate },
-  };
+  const updateIsCheckedDueDate = { $set: { ...dates, isChecked, hasDueDate } };
   const updateRemoveDueDate = {
     $unset: {
       remainingDays: '',
       remainingHours: '',
       remainingMinutes: '',
       remainingSeconds: '',
-      pickedDueDate: '',
     },
-    $set: { hasDueDate, isChecked },
+    $set: { hasDueDate },
   };
 
   // const update = isChecked === false && !dueDate ? { $set: {...dates, isChecked} } : { $unset: { remainingDays: '', remainingHours: '', remainingMinutes: '', remainingSeconds: '', isDueDate: '' }, hasDueDate: false }
 
   let update;
-  if (hasDueDate !== undefined) {
-    if (hasDueDate === true && dueDate) update = updateIsCheckedDueDate;
-    else update = updateRemoveDueDate;
-  } else {
+  if (hasDueDate === false) {
     update = updateIsChecked;
-    if (dueDate) update = updateIsCheckedDueDate;
+  } else {
+    if (isChecked === true) update = updateIsCheckedDueDate;
+    else update = { ...updateIsChecked, ...updateRemoveDueDate };
   }
 
   const checkItem = await CheckItem.findOneAndUpdate(query, update);

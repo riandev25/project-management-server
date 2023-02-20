@@ -3,7 +3,7 @@ import { ObjectId } from 'mongodb';
 import { CheckItem } from '../../models/checklist.model';
 
 export const updateCheckItem = asyncHandler(async (req, res, next) => {
-  const { id, idCheckItem } = req.params;
+  const { idCheckItem } = req.params;
   // const { checkName, pos, checked } = req.query;
 
   // Number(pos);
@@ -25,11 +25,12 @@ export const updateCheckItem = asyncHandler(async (req, res, next) => {
   //   return optionalUpdate;
   // };
 
-  const query = { idChecklist: id, _id: new ObjectId(idCheckItem) };
+  const query = req.body ? { _id: new ObjectId(idCheckItem) } : { _id: new ObjectId(idCheckItem) , dueDate: { $exists: true }}
+  const update = req.body ? { $set: req.body } : { $unset: { dueDate: '' } }
   // const update = { ...req.body, isChecked: checkedParam, pos };
   // // const update = updateData();
 
-  const checkItem = await CheckItem.findOneAndUpdate(query, req.body);
+  const checkItem = await CheckItem.findOneAndUpdate(query, update);
   res.status(200).send(checkItem);
   next();
 });

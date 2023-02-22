@@ -17,8 +17,6 @@ export const createApp = (): Express => {
 
   const app = express();
 
-  app.use(cookieParser());
-
   // Enable cors
   // const corsOptions = {
   //   origin: '*',
@@ -32,6 +30,10 @@ export const createApp = (): Express => {
     })
   );
 
+  // app.use(corsHeader);
+
+  app.use(cookieParser());
+
   // Compressed to gzip file
   app.use(compression());
 
@@ -39,6 +41,14 @@ export const createApp = (): Express => {
 
   // Enable parsing Middleware for Request
   app.use(express.json());
+  // app.use(express.urlencoded({ extended: true }));
+
+  // const proxyOptions = {
+  //   target: 'http://www.example.org',
+  //   changeOrigin: true
+  // };
+
+  // const apiProxy = createProxyMiddleware(proxyOptions) as any
 
   app.set('trust proxy', 1);
   app.use(

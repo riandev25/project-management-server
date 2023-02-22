@@ -1,14 +1,15 @@
 import asyncHandler from 'express-async-handler';
 import { Board } from '../../models/board.model';
-
-interface INewUser extends Express.User {
-  apiKey: string;
-}
+import { User } from '../../models/user.model';
+import { compareData, hashData } from '../../utils/passwordHelper';
 
 export const getBoard = asyncHandler(async (req, res, next) => {
   const apiKey = String(req.headers['x-api-key']);
-  const user = req.user as INewUser;
-  // console.log(user.apiKey);
+  // const hashedApiKey = hashData(apiKey);
+  // const authenticate = await User.findOne(req.user);
+  // const hashedApiKey = String(authenticate?.apiKey);
+  // const authenticateApikey = compareData(rawApiKey, hashedApiKey);
+  console.log(typeof req.user);
 
   // Query
   const query = { apiKey };

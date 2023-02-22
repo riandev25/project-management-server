@@ -11,7 +11,7 @@ export const getBoard = asyncHandler(async (req, res, next) => {
   // console.log(user.apiKey);
 
   // Query
-  const query = { apiKey };
+  const query = { apiKey: user.apiKey };
 
   // Returned Data
   const returned = { apiKey: 0 };

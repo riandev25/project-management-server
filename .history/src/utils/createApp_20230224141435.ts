@@ -48,10 +48,10 @@ export const createApp = (): Express => {
       saveUninitialized: false,
       cookie: {
         sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+        // sameSite: 'lax',
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production' ? true : false,
         maxAge: 30 * 24 * 60 * 60 * 1000,
-        domain: 'taskaccio.com',
       },
       store: MongoStore.create({
         mongoUrl: process.env.MONGO_SESSION_URI,

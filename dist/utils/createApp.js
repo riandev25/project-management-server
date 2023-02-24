@@ -63,11 +63,11 @@ const createApp = () => {
         resave: false,
         saveUninitialized: false,
         cookie: {
-            // sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-            sameSite: 'lax',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production' ? true : false,
             maxAge: 30 * 24 * 60 * 60 * 1000,
+            domain: 'taskaccio.com',
         },
         store: connect_mongo_1.default.create({
             mongoUrl: process.env.MONGO_SESSION_URI,

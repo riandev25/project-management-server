@@ -17,17 +17,15 @@ const express_async_handler_1 = __importDefault(require("express-async-handler")
 const board_model_1 = require("../../models/board.model");
 exports.getBoard = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const apiKey = String(req.headers['x-api-key']);
-    // const hashedApiKey = hashData(apiKey);
-    // const authenticate = await User.findOne(req.user);
-    // const hashedApiKey = String(authenticate?.apiKey);
-    // const authenticateApikey = compareData(rawApiKey, hashedApiKey);
+    const user = req.user;
+    // console.log(user.apiKey);
     // Query
-    const query = { apiKey: [...apiKey] };
+    const query = { apiKey };
     // Returned Data
     const returned = { apiKey: 0 };
     if (apiKey) {
         const board = yield board_model_1.Board.find(query, returned);
-        res.status(201).send(board);
+        res.status(200).send(board);
         next();
     }
 }));

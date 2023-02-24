@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const createLabel_controller_1 = require("../controllers/label/createLabel.controller");
+const deleteAllLabels_controller_1 = require("../controllers/label/deleteAllLabels.controller");
 const deleteLabel_controller_1 = require("../controllers/label/deleteLabel.controller");
 const getLabel_controller_1 = require("../controllers/label/getLabel.controller");
 const getSingleLabel_controller_1 = require("../controllers/label/getSingleLabel.controller");
@@ -14,4 +15,5 @@ router.get('', getLabel_controller_1.getLabel);
 router.get('/:id', getSingleLabel_controller_1.getSingleLabel);
 router.delete('/:id', deleteLabel_controller_1.deleteLabel);
 router.patch('/:id', updateLabel_controller_1.updateLabel);
+router.delete('', deleteAllLabels_controller_1.deleteAllLabels);
 exports.default = router;

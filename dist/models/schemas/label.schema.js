@@ -10,6 +10,7 @@ exports.labelSchema = new mongoose_1.Schema({
     bgColorHover: { type: String, required: true },
     iconColor: { type: String, required: true },
     isChecked: { type: Boolean, required: true },
-    idCard: { type: String, required: true }
+    idCard: { type: String, required: true },
+    idBoard: { type: String },
     // isOpen: { type: Boolean, required: true },
 });

@@ -17,7 +17,7 @@ const express_async_handler_1 = __importDefault(require("express-async-handler")
 const label_model_1 = require("../../models/label.model");
 exports.getLabel = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, iconColor, checked, idCard } = req.query;
-    if (!idCard) {
+    if (idCard) {
         // Default query to database
         const defaultQuery = { idCard };
         // Optional query to database

@@ -17,7 +17,7 @@ const express_async_handler_1 = __importDefault(require("express-async-handler")
 const label_model_1 = require("../../models/label.model");
 exports.updateLabel = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const { idCard } = req.query;
+    // const { idCard } = req.query;
     const update = { $set: req.body };
     const label = yield label_model_1.Label.findByIdAndUpdate(id, update);
     res.status(201).send(label);

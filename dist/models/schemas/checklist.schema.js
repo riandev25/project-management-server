@@ -7,7 +7,15 @@ exports.checkItemSchema = new mongoose_1.Schema({
     name: { type: String, required: true },
     isChecked: { type: Boolean },
     pos: { type: Number, required: true },
-    idChecklist: { type: String },
+    idChecklist: { type: String, required: true },
+    idCard: { type: String, required: true },
+    hasDueDate: { type: Boolean, required: true },
+    remainingDays: { type: Number },
+    remainingHours: { type: Number },
+    remainingMinutes: { type: Number },
+    remainingSeconds: { type: Number },
+    isDueDate: { type: Boolean },
+    pickedDueDate: { type: Date },
 });
 exports.checklistSchema = new mongoose_1.Schema({
     name: { type: String, required: true },

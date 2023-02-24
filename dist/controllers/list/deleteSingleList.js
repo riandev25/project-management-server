@@ -12,31 +12,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createCheckItem = void 0;
+exports.deleteSingleList = void 0;
 const express_async_handler_1 = __importDefault(require("express-async-handler"));
+const attachment_model_1 = require("../../models/attachment.model");
 const checklist_model_1 = require("../../models/checklist.model");
-exports.createCheckItem = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const label_model_1 = require("../../models/label.model");
+const list_model_1 = require("../../models/list.model");
+exports.deleteSingleList = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    // const { pos, checked } = req.query;
-    // Number(pos);
-    // const checkQueryParam = () => {
-    //   if (checked === 'true') return true;
-    //   else return false;
-    // };
-    // const checkedParam = checkQueryParam();
-    // // With pos query
-    // const updateWithPos = {
-    //   $push: {
-    //     $each: [{ ...req.body, isChecked: checkedParam }],
-    //     $position: pos,
-    //   },
-    // };
-    // // Without pos query
-    // const updateWithoutPos = {
-    //   $push: { ...req.body, isChecked: checkedParam },
-    // };
-    const update = Object.assign(Object.assign({}, req.body), { idChecklist: id, isChecked: false, hasDueDate: false });
-    const checkItem = yield checklist_model_1.CheckItem.insertMany(update);
-    res.status(201).send(checkItem);
+    const list = yield list_model_1.List.findById(id);
+    // Retrieve all card id in a list
+    const cardIds = list === null || list === void 0 ? void 0 : list.cards.map((card) => card._id);
+    const cardIdsQuery = { _id: { $in: cardIds } };
+    yield list_model_1.List.findByIdAndDelete(id);
+    yield attachment_model_1.Attachment.deleteMany(cardIdsQuery);
+    yield checklist_model_1.Checklist.deleteMany(cardIdsQuery);
+    yield checklist_model_1.CheckItem.deleteMany(cardIdsQuery);
+    yield label_model_1.Label.deleteMany(cardIdsQuery);
+    res.status(204).send({ message: 'List deleted successfully' });
     next();
 }));

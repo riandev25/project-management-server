@@ -17,7 +17,7 @@ const express_async_handler_1 = __importDefault(require("express-async-handler")
 const mongodb_1 = require("mongodb");
 const checklist_model_1 = require("../../models/checklist.model");
 exports.updateCheckItem = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id, idCheckItem } = req.params;
+    const { idCheckItem } = req.params;
     // const { checkName, pos, checked } = req.query;
     // Number(pos);
     // const checkQueryParam = () => {
@@ -34,10 +34,38 @@ exports.updateCheckItem = (0, express_async_handler_1.default)((req, res, next) 
     //   if (pos) optionalUpdate.pos = pos;
     //   return optionalUpdate;
     // };
-    const query = { idChecklist: id, _id: new mongodb_1.ObjectId(idCheckItem) };
-    // const update = { ...req.body, isChecked: checkedParam, pos };
-    // // const update = updateData();
-    const checkItem = yield checklist_model_1.CheckItem.findOneAndUpdate(query, req.body);
+    const { dueDate, isChecked, hasDueDate, pickedDueDate } = req.body;
+    // const dates = getSpecificDateTime(dueDate);
+    console.log(isChecked);
+    const query = { _id: new mongodb_1.ObjectId(idCheckItem) };
+    const updateIsChecked = { $set: { isChecked } };
+    const updateIsCheckedDueDate = {
+        $set: Object.assign(Object.assign({}, dueDate), { pickedDueDate, isChecked, hasDueDate }),
+    };
+    const updateRemoveDueDate = {
+        $unset: {
+            remainingDays: '',
+            remainingHours: '',
+            remainingMinutes: '',
+            remainingSeconds: '',
+            pickedDueDate: '',
+        },
+        $set: { hasDueDate, isChecked },
+    };
+    // const update = isChecked === false && !dueDate ? { $set: {...dates, isChecked} } : { $unset: { remainingDays: '', remainingHours: '', remainingMinutes: '', remainingSeconds: '', isDueDate: '' }, hasDueDate: false }
+    let update;
+    if (hasDueDate !== undefined) {
+        if (hasDueDate === true && dueDate)
+            update = updateIsCheckedDueDate;
+        else
+            update = updateRemoveDueDate;
+    }
+    else {
+        update = updateIsChecked;
+        if (dueDate)
+            update = updateIsCheckedDueDate;
+    }
+    const checkItem = yield checklist_model_1.CheckItem.findOneAndUpdate(query, update);
     res.status(200).send(checkItem);
     next();
 }));

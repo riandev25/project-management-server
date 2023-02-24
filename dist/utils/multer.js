@@ -20,11 +20,14 @@ exports.upload = (0, multer_1.default)({
         if (ext !== '.jpg' &&
             ext !== '.jpeg' &&
             ext !== '.png' &&
-            ext !== '.docx' &&
-            ext !== '.xls') {
+            ext !== '.svg' &&
+            ext !== '.gif') {
             cb(null, false);
             return;
         }
         cb(null, true);
+    },
+    limits: {
+        fileSize: 1024 * 1024 * 5, // 5 mb file size limit
     },
 });

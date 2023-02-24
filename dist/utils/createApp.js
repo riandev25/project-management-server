@@ -32,37 +32,31 @@ const cors_1 = __importDefault(require("cors"));
 const compression_1 = __importDefault(require("compression"));
 const express_session_1 = __importDefault(require("express-session"));
 const passport_1 = __importDefault(require("passport"));
-const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const connect_mongo_1 = __importDefault(require("connect-mongo"));
 const routes_1 = __importDefault(require("../routes/routes"));
 require("../strategies/local.strategy");
 const dotenv = __importStar(require("dotenv"));
 require("../utils/cloudinary");
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const createApp = () => {
     dotenv.config();
     const app = (0, express_1.default)();
+    app.use((0, cookie_parser_1.default)());
     // Enable cors
     // const corsOptions = {
     //   origin: '*',
     //   credentials: true,
     // };
     app.use((0, cors_1.default)({
-        origin: 'http://localhost:3000',
+        origin: ['http://localhost:3000', 'https://taskaccio.vercel.app'],
         credentials: true,
+        optionsSuccessStatus: 200,
     }));
-    // app.use(corsHeader);
     // Compressed to gzip file
     app.use((0, compression_1.default)());
     app.use(express_1.default.static('dist'));
     // Enable parsing Middleware for Request
     app.use(express_1.default.json());
-    // app.use(express.urlencoded({ extended: true }));
-    app.use((0, cookie_parser_1.default)());
-    // const proxyOptions = {
-    //   target: 'http://www.example.org',
-    //   changeOrigin: true
-    // };
-    // const apiProxy = createProxyMiddleware(proxyOptions) as any
     app.set('trust proxy', 1);
     app.use((0, express_session_1.default)({
         secret: 'session',

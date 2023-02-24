@@ -27,11 +27,13 @@ const express_async_handler_1 = __importDefault(require("express-async-handler")
 //   }
 // );
 exports.authenticateUser = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('inside auth check middleware');
     const apiKey = String(req.headers['x-api-key']);
     // const authenticate = await User.findOne(req.user);
     // const savedApikey = String(authenticate?.apiKey);
+    console.log(`Authentication ${req.user}`);
+    console.log(`Authentication ${apiKey}`);
     if (req.user && apiKey) {
+        console.log(`This is ${req.user} for authentication.`);
         next();
     }
     else

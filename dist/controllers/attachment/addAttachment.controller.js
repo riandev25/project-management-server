@@ -17,6 +17,7 @@ const express_async_handler_1 = __importDefault(require("express-async-handler")
 const cloudinary_1 = __importDefault(require("cloudinary"));
 const path_1 = require("path");
 const attachment_model_1 = require("../../models/attachment.model");
+const getDateTime_1 = require("../../utils/getDateTime");
 exports.addAttachment = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     if (req.file) {
         const file = req.file.path;
@@ -27,25 +28,25 @@ exports.addAttachment = (0, express_async_handler_1.default)((req, res, next) =>
         // Check if file exist
         const query = { name: baseFilename, idCard };
         const attachmentExist = yield attachment_model_1.Attachment.find(query);
-        console.log(baseFilename);
+        const { formattedDate, formattedTime } = (0, getDateTime_1.getDateTime)();
         if (attachmentExist.length == 0) {
             const attachment = new attachment_model_1.Attachment({
-                name: baseFilename,
+                name: req.file.originalname,
                 idCard: idCard,
+                type: 'image',
                 file_url: result.secure_url,
                 cloudinary_id: result.public_id,
+                uploaded_at: formattedTime,
+                uploaded_on: formattedDate,
             });
             yield attachment.save();
-            res.status(201).send({ attachment });
+            res.status(201).send({ message: 'Upload successful' });
             next();
         }
         else {
             res.status(400).send({
                 message: 'Filename already exist. Please provide another filename.',
             });
-            // next(
-            //   new Error('Filename already exist. Please provide another filename.')
-            // );
         }
     }
 }));

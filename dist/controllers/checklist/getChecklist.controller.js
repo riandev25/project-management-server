@@ -19,7 +19,7 @@ exports.getChecklist = (0, express_async_handler_1.default)((req, res, next) => 
     const { idCard } = req.query;
     const encodedIdCard = encodeURIComponent(String(idCard));
     if (idCard) {
-        const checklistDb = yield checklist_model_1.Checklist.find({ idCard: encodedIdCard });
+        const checklistDb = yield checklist_model_1.Checklist.find({ idList: encodedIdCard });
         res.send(checklistDb);
         next();
     }

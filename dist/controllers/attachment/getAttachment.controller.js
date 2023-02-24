@@ -19,11 +19,12 @@ exports.getAttachment = (0, express_async_handler_1.default)((req, res, next) =>
     const { idCard } = req.query;
     const query = { idCard };
     const attachment = yield attachment_model_1.Attachment.find(query);
-    if (attachment.length !== 0) {
-        res.status(200).send(attachment);
-        next();
-    }
-    else {
-        res.status(404).send({ message: 'Attachment not found' });
-    }
+    // if (attachment.length !== 0) {
+    //   res.status(200).send(attachment);
+    //   next();
+    // } else {
+    //   res.status(404).send({ message: 'Attachment not found' });
+    // }
+    res.status(200).send(attachment);
+    next();
 }));

@@ -11,6 +11,7 @@ const getCheckItem_controller_1 = require("../controllers/checklist/getCheckItem
 const getCheckItems_controller_1 = require("../controllers/checklist/getCheckItems.controller");
 const deleteCheckItem_controller_1 = require("../controllers/checklist/deleteCheckItem.controller");
 const updateCheckItem_controller_1 = require("../controllers/checklist/updateCheckItem.controller");
+const deleteCheckitems_1 = require("../controllers/checklist/deleteCheckitems");
 const router = (0, express_1.Router)();
 router.use(authenticate_1.authenticateUser);
 // Checklist
@@ -19,9 +20,10 @@ router.get('', getChecklist_controller_1.getChecklist);
 router.delete('/:id', deleteChecklist_controller_1.deleteChecklist);
 router.patch('/:id', updateChecklist_controller_1.updateChecklist);
 // Check item
-router.post('/:id/checkItems', createCheckItem_controller_1.createCheckItem);
-router.get('/:id/checkItems', getCheckItems_controller_1.getCheckItems);
+router.post('/:id/checkitems', createCheckItem_controller_1.createCheckItem);
+router.get('/checkitems', getCheckItems_controller_1.getCheckItems);
 router.get('/:id/checkItems/:idCheckItem', getCheckItem_controller_1.getCheckItem);
-router.delete('/:id/checkItems/:idCheckItem', deleteCheckItem_controller_1.deleteCheckItem);
-router.patch('/:id/checkItems/:idCheckItem', updateCheckItem_controller_1.updateCheckItem);
+router.delete('/checkitems/:idCheckItem', deleteCheckItem_controller_1.deleteCheckItem);
+router.delete('/:id/checkitems', deleteCheckitems_1.deleteCheckItems);
+router.patch('/checkitems/:idCheckItem', updateCheckItem_controller_1.updateCheckItem);
 exports.default = router;

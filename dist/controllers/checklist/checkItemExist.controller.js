@@ -17,6 +17,7 @@ const express_async_handler_1 = __importDefault(require("express-async-handler")
 const checklist_model_1 = require("../../models/checklist.model");
 exports.getCheckItems = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { checkName, idChecklist } = req.query;
+    //
     if (idChecklist && checkName) {
         const checkItem = yield checklist_model_1.CheckItem.find({ idChecklist, checkName });
         res.send(checkItem);

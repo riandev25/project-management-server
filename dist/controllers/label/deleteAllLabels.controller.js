@@ -12,14 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.boardExist = void 0;
+exports.deleteAllLabels = void 0;
 const express_async_handler_1 = __importDefault(require("express-async-handler"));
-const board_model_1 = require("../../models/board.model");
-exports.boardExist = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { cardName } = req.query;
-    // Default query to database //
-    const query = { cardName };
-    const board = yield board_model_1.Board.find(query);
-    res.status(200).send(board);
+const label_model_1 = require("../../models/label.model");
+exports.deleteAllLabels = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { idBoard } = req.query;
+    const query = { idBoard };
+    yield label_model_1.Label.deleteMany(query);
+    res.status(204).send({ message: 'Labels successfully deleted' });
     next();
 }));

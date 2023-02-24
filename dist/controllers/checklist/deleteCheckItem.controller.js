@@ -16,9 +16,9 @@ exports.deleteCheckItem = void 0;
 const express_async_handler_1 = __importDefault(require("express-async-handler"));
 const checklist_model_1 = require("../../models/checklist.model");
 exports.deleteCheckItem = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id, idCheckItem } = req.params;
-    const query = { idChecklist: id, idCheckItem };
-    const checkItem = yield checklist_model_1.CheckItem.findOneAndDelete(query);
+    const { idCheckItem } = req.params;
+    const query = { _id: idCheckItem };
+    const checkItem = yield checklist_model_1.CheckItem.findByIdAndDelete(query);
     res.status(204).send(checkItem);
     next();
 }));

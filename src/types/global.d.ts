@@ -6,6 +6,7 @@ declare global {
       DB_USERNAME: string;
       MONGO_SESSION_URI: string;
       MONGO_BOARD_URI: string;
+      SESSION_SECRET: string;
       CLOUDINARY_CLOUD_NAME: string;
       CLOUDINARY_API_KEY: string;
       CLOUDINARY_SECRET: string;

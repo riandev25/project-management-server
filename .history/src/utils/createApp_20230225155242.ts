@@ -43,8 +43,7 @@ export const createApp = (): Express => {
   app.set('trust proxy', 1);
   app.use(
     session({
-      proxy: process.env.NODE_ENV === 'production' ? true : false,
-      secret: process.env.SESSION_SECRET,
+      secret: 'session',
       resave: false,
       saveUninitialized: false,
       cookie: {

@@ -50,7 +50,7 @@ export const createApp = (): Express => {
   //   next();
   // });
 
-  app.set('trust proxy', 1);
+  // app.set('trust proxy', 1);
   app.use(
     session({
       proxy: process.env.NODE_ENV === 'production' ? true : false,

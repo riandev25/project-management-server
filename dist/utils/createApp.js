@@ -55,7 +55,10 @@ const createApp = () => {
     // Enable parsing Middleware for Request
     app.use(express_1.default.json());
     app.use(function (req, res, next) {
-        res.header('Access-Control-Allow-Origin', 'https://taskaccio.vercel.app');
+        res.header('Access-Control-Allow-Origin', [
+            'http://localhost:3000',
+            'https://taskaccio.vercel.app',
+        ]);
         res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
         res.header('Access-Control-Allow-Credentials', 'true');
         next();

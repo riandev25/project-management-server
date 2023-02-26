@@ -1,20 +1,23 @@
-import { Router } from 'express';
+import { Request, Response, Router } from 'express';
 import passport from 'passport';
 import { authRegisterController } from '../controllers/auth/auth.controller';
-// import { connectToSessions } from '../../database/mongodb';
-import { authenticateUser } from '../middlewares/authenticate';
 import asyncHandler from 'express-async-handler';
 const router = Router();
 
-// router.use(connectToSessions);
-
 router.post(
   '/login',
-  asyncHandler(async (req, res) => {
-    await passport.authenticate('local');
-    res
-      .status(200)
-      .send({ status: 'success', message: 'Logged in successfully' });
+  passport.authenticate('local'),
+  asyncHandler((req, res) => {
+    if (req.user) {
+      console.log(req.cookies);
+      console.log(`This is ${req.user} for login`);
+      res.status(200).send({
+        message: 'Successfully logged in',
+        user: req.user,
+      });
+    } else {
+      res.status(401).send({ message: 'User not found' });
+    }
   })
 );
 

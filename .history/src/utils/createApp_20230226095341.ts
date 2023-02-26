@@ -68,15 +68,6 @@ export const createApp = (): Express => {
     })
   );
 
-  app.get('/api/test', (req: any, res: express.Response) => {
-    if (!req.session.views) {
-      req.session.views = 0;
-    }
-
-    req.session.views += 1;
-    res.send(`Number of views: ${req.session.views}`);
-  });
-
   app.use(passport.initialize());
   app.use(passport.session());
 

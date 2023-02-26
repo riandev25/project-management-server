@@ -55,12 +55,16 @@ const createApp = () => {
     // Enable parsing Middleware for Request
     app.use(express_1.default.json());
     app.use(function (req, res, next) {
-        res.header('Access-Control-Allow-Origin', [
+        const allowedOrigins = [
             'http://localhost:3000',
             'https://taskaccio.vercel.app',
-        ]);
-        res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-        res.header('Access-Control-Allow-Credentials', 'true');
+        ];
+        const origin = req.headers.origin;
+        if (allowedOrigins.includes(String(origin))) {
+            res.header('Access-Control-Allow-Origin', origin);
+            res.header('Access-Control-Allow-Credentials', 'true');
+            res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+        }
         next();
     });
     // app.set('trust proxy', 1);

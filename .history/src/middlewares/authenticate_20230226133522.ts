@@ -21,11 +21,12 @@ export const authenticateUser = asyncHandler(
     const apiKey = String(req.headers['x-api-key']);
     // const authenticate = await User.findOne(req.user);
     // const savedApikey = String(authenticate?.apiKey);
-    console.log(`Authentication ${req.user}`);
-    console.log(`Authentication ${apiKey}`);
+    console.log(req.cookies);
+    // console.log(`Authentication ${req.user}`);
+    // console.log(`Authentication ${apiKey}`);
     if (req.user && apiKey) {
       console.log(`This is ${req.user} for authentication.`);
       next();
-    } else res.redirect('http://localhost:3000/auth/login');
+    } else res.send(401);
   }
 );

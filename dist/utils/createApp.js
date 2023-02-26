@@ -57,9 +57,17 @@ const createApp = () => {
     app.use(express_1.default.static('dist'));
     // Enable parsing Middleware for Request
     app.use(express_1.default.json());
-    app.set('trust proxy', 1);
+    // app.use(function (req, res, next) {
+    //   res.header('Access-Control-Allow-Origin', '*');
+    //   res.header(
+    //     'Access-Control-Allow-Headers',
+    //     'Origin, X-Requested-With, Content-Type, Accept'
+    //   );
+    //   next();
+    // });
+    // app.set('trust proxy', 1);
     app.use((0, express_session_1.default)({
-        proxy: process.env.NODE_ENV === 'production' ? true : false,
+        // proxy: process.env.NODE_ENV === 'production' ? true : false,
         secret: 'session',
         resave: false,
         saveUninitialized: false,
@@ -73,6 +81,13 @@ const createApp = () => {
             mongoUrl: process.env.MONGO_SESSION_URI,
         }),
     }));
+    app.get('/api/test', (req, res) => {
+        if (!req.session.views) {
+            req.session.views = 0;
+        }
+        req.session.views += 1;
+        res.send(`Number of views: ${req.session.views}`);
+    });
     app.use(passport_1.default.initialize());
     app.use(passport_1.default.session());
     app.use('/api', routes_1.default);

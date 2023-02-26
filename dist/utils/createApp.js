@@ -28,7 +28,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createApp = void 0;
 const express_1 = __importDefault(require("express"));
-const cors_1 = __importDefault(require("cors"));
 const compression_1 = __importDefault(require("compression"));
 const express_session_1 = __importDefault(require("express-session"));
 const passport_1 = __importDefault(require("passport"));
@@ -42,33 +41,35 @@ const createApp = () => {
     dotenv.config();
     const app = (0, express_1.default)();
     app.use((0, cookie_parser_1.default)());
-    // Enable cors
-    // const corsOptions = {
-    //   origin: '*',
-    //   credentials: true,
-    // };
-    app.use((0, cors_1.default)({
-        origin: ['http://localhost:3000', 'https://taskaccio.vercel.app'],
-        allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
-        credentials: true,
-        optionsSuccessStatus: 200,
-    }));
+    // app.use(
+    //   cors({
+    //     origin: ['http://localhost:3000', 'https://taskaccio.vercel.app'],
+    //     allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
+    //     credentials: true,
+    //     optionsSuccessStatus: 200,
+    //   })
+    // );
     // Compressed to gzip file
     app.use((0, compression_1.default)());
     app.use(express_1.default.static('dist'));
     // Enable parsing Middleware for Request
     app.use(express_1.default.json());
-    // app.use(function (req, res, next) {
-    //   res.header('Access-Control-Allow-Origin', '*');
-    //   res.header(
-    //     'Access-Control-Allow-Headers',
-    //     'Origin, X-Requested-With, Content-Type, Accept'
-    //   );
-    //   next();
-    // });
-    app.set('trust proxy', 1);
+    app.use(function (req, res, next) {
+        const allowedOrigins = [
+            'http://localhost:3000',
+            'http://taskaccio.vercel.app',
+        ];
+        const origin = req.headers.origin;
+        if (allowedOrigins.includes(String(origin))) {
+            res.header('Access-Control-Allow-Origin', origin);
+            res.header('Access-Control-Allow-Credentials', 'true');
+            res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+        }
+        next();
+    });
+    // app.set('trust proxy', 1);
     app.use((0, express_session_1.default)({
-        proxy: process.env.NODE_ENV === 'production' ? true : false,
+        // proxy: process.env.NODE_ENV === 'production' ? true : false,
         secret: 'session',
         resave: false,
         saveUninitialized: false,

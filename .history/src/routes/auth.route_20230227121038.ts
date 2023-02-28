@@ -9,8 +9,8 @@ router.post(
   passport.authenticate('local'),
   asyncHandler((req, res) => {
     console.log('log');
-    console.log(req.session.cookie);
-    if (req.user) {
+    console.log(req.cookies);
+    if (req.user && req.cookies) {
       console.log(`This is ${req.user} for login`);
       res.status(200).send({
         message: 'Successfully logged in',

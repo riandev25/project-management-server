@@ -1,4 +1,5 @@
 import generateApiKey from 'generate-api-key';
+import { ObjectId } from 'mongodb';
 import passport from 'passport';
 import { Strategy } from 'passport-local';
 import { User } from '../models/user.model';
@@ -32,11 +33,19 @@ passport.use(
         if (!email || !password)
           return done(null, false, { message: 'Invalid credentials' });
         const user = await User.findOne({ email });
-        if (!user) return done(null, false, { message: 'User not found' });
+        // if (!user) return done(null, false, { message: 'User not found' });
+        if (!user) {
+          console.log('User not found');
+          return done(null, false, { message: 'User not found' });
+        }
         const isValid = compareData(password, user.password);
         if (isValid) {
           console.log('Authenticated Successfully!');
-          return done(null, user);
+          return done(null, {
+            _id: new ObjectId(user._id),
+            email: user.email,
+            apiKey: user.apiKey,
+          });
         } else {
           console.log('Invalid Authentication');
           done(null, false, { message: 'User not found' });
@@ -54,21 +63,20 @@ passport.use(
 //     {
 //       usernameField: 'email',
 //     },
-//     async (email, password, done) => {
+//     async (email, password, done, next) => { // <-- add next parameter
 //       try {
 //         if (!email || !password)
 //           return done(null, false, { message: 'Invalid credentials' });
 //         const user = await User.findOne({ email });
 //         if (!user) return done(null, false, { message: 'User not found' });
-//         if (user?.apiKey === undefined) {
-//           const apiKey = generateApiKey({ method: 'string', length: 32 });
-//           const hashedApiKey = hashData(String(apiKey));
-//           await User.updateOne({email}, {$set: {apiKey: hashedApiKey}} )
-//         }
 //         const isValid = compareData(password, user.password);
 //         if (isValid) {
 //           console.log('Authenticated Successfully!');
-//           return done(null, user);
+//           return done(null, {
+//             _id: new ObjectId(user._id),
+//             email: user.email,
+//             apiKey: user.apiKey,
+//           });
 //         } else {
 //           console.log('Invalid Authentication');
 //           done(null, false, { message: 'User not found' });
@@ -76,6 +84,8 @@ passport.use(
 //       } catch (err) {
 //         console.log(err);
 //         done(err, null);
+//       } finally {
+//         next(); // <-- call next() after the try-catch block
 //       }
 //     }
 //   )

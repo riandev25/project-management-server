@@ -16,9 +16,10 @@ exports.createBoard = void 0;
 const express_async_handler_1 = __importDefault(require("express-async-handler"));
 const board_model_1 = require("../../models/board.model");
 exports.createBoard = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const headerApiKey = String(req.headers['x-api-key']);
-    if (headerApiKey) {
-        const board = yield board_model_1.Board.insertMany(Object.assign(Object.assign({}, req.body), { apiKey: headerApiKey }));
+    // const headerApiKey = String(req.headers['x-api-key']);
+    const user = req.user;
+    if (user) {
+        const board = yield board_model_1.Board.insertMany(Object.assign(Object.assign({}, req.body), { owner: user._id }));
         res.status(201).send(board);
         next();
     }

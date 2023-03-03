@@ -7,9 +7,10 @@ const deleteLabel_controller_1 = require("../controllers/label/deleteLabel.contr
 const getLabel_controller_1 = require("../controllers/label/getLabel.controller");
 const getSingleLabel_controller_1 = require("../controllers/label/getSingleLabel.controller");
 const updateLabel_controller_1 = require("../controllers/label/updateLabel.controller");
-const authenticate_1 = require("../middlewares/authenticate");
+const jwt_strategy_1 = require("../strategies/jwt.strategy");
 const router = (0, express_1.Router)();
-router.use(authenticate_1.authenticateUser);
+// router.use(authenticateUser);
+router.use(jwt_strategy_1.verifyUser);
 router.post('', createLabel_controller_1.createLabel);
 router.get('', getLabel_controller_1.getLabel);
 router.get('/:id', getSingleLabel_controller_1.getSingleLabel);

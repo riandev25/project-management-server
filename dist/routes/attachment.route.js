@@ -5,10 +5,10 @@ const addAttachment_controller_1 = require("../controllers/attachment/addAttachm
 const deleteAllAttachments_controller_1 = require("../controllers/attachment/deleteAllAttachments.controller");
 const deleteAttachment_controller_1 = require("../controllers/attachment/deleteAttachment.controller");
 const getAttachment_controller_1 = require("../controllers/attachment/getAttachment.controller");
-const authenticate_1 = require("../middlewares/authenticate");
+const jwt_strategy_1 = require("../strategies/jwt.strategy");
 const multer_1 = require("../utils/multer");
 const router = (0, express_1.Router)();
-router.use(authenticate_1.authenticateUser);
+router.use(jwt_strategy_1.verifyUser);
 router.post('', multer_1.upload.single('image'), addAttachment_controller_1.addAttachment);
 router.get('', getAttachment_controller_1.getAttachment);
 router.delete('/:id', deleteAttachment_controller_1.deleteAttachment);

@@ -8,7 +8,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const emailValidator_1 = require("../../utils/emailValidator");
 const passwordValidator_1 = require("../../utils/passwordValidator");
 exports.userSchema = new mongoose_1.default.Schema({
-    email: {
+    username: {
         type: String,
         required: true,
         unique: true,

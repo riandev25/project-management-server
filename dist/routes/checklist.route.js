@@ -6,14 +6,15 @@ const createCheckItem_controller_1 = require("../controllers/checklist/createChe
 const deleteChecklist_controller_1 = require("../controllers/checklist/deleteChecklist.controller");
 const getChecklist_controller_1 = require("../controllers/checklist/getChecklist.controller");
 const updateChecklist_controller_1 = require("../controllers/checklist/updateChecklist.controller");
-const authenticate_1 = require("../middlewares/authenticate");
 const getCheckItem_controller_1 = require("../controllers/checklist/getCheckItem.controller");
 const getCheckItems_controller_1 = require("../controllers/checklist/getCheckItems.controller");
 const deleteCheckItem_controller_1 = require("../controllers/checklist/deleteCheckItem.controller");
 const updateCheckItem_controller_1 = require("../controllers/checklist/updateCheckItem.controller");
 const deleteCheckitems_1 = require("../controllers/checklist/deleteCheckitems");
+const jwt_strategy_1 = require("../strategies/jwt.strategy");
 const router = (0, express_1.Router)();
-router.use(authenticate_1.authenticateUser);
+// router.use(authenticateUser);
+router.use(jwt_strategy_1.verifyUser);
 // Checklist
 router.post('', createChecklist_controller_1.addChecklist);
 router.get('', getChecklist_controller_1.getChecklist);

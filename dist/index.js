@@ -31,14 +31,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv = __importStar(require("dotenv"));
+const mongoose_1 = __importDefault(require("mongoose"));
 const createApp_1 = require("./utils/createApp");
 dotenv.config();
 const PORT = process.env.PORT || 3001;
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     console.log(`Running in ${process.env.NODE_ENV} mode.`);
     try {
+        const connect = mongoose_1.default.connect(process.env.MONGO_BOARD_URI);
+        connect.then((db) => {
+            console.log("Connected correctly to server");
+        }, (err) => { console.log(err); });
         const app = (0, createApp_1.createApp)();
         app.listen(PORT, () => console.log(`Running on Port ${PORT}`));
     }

@@ -17,13 +17,13 @@ const express_async_handler_1 = __importDefault(require("express-async-handler")
 const checklist_model_1 = require("../../models/checklist.model");
 exports.getChecklist = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { idCard } = req.query;
-    const encodedIdCard = encodeURIComponent(String(idCard));
+    // const encodedIdCard = encodeURIComponent(String(idCard));
     if (idCard) {
-        const checklistDb = yield checklist_model_1.Checklist.find({ idList: encodedIdCard });
-        res.send(checklistDb);
+        const checklistDb = yield checklist_model_1.Checklist.find({ idCard });
+        res.status(200).send(checklistDb);
         next();
     }
     else {
-        res.send(404);
+        res.send(500);
     }
 }));

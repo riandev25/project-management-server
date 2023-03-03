@@ -16,14 +16,16 @@ exports.getBoard = void 0;
 const express_async_handler_1 = __importDefault(require("express-async-handler"));
 const board_model_1 = require("../../models/board.model");
 exports.getBoard = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const apiKey = String(req.headers['x-api-key']);
-    const user = req.user;
+    // const apiKey = String(req.headers['x-api-key']);
+    // const user = req.user as INewUser;
     // console.log(user.apiKey);
+    const user = req.user;
     // Query
-    const query = { apiKey };
+    console.log(user);
+    const query = { owner: user._id };
     // Returned Data
-    const returned = { apiKey: 0 };
-    if (apiKey) {
+    const returned = { owner: 0 };
+    if (req.user) {
         const board = yield board_model_1.Board.find(query, returned);
         res.status(200).send(board);
         next();

@@ -6,9 +6,10 @@ const deleteBoard_controller_1 = require("../controllers/board/deleteBoard.contr
 const getBoard_controller_1 = require("../controllers/board/getBoard.controller");
 const getSingleBoard_controller_1 = require("../controllers/board/getSingleBoard.controller");
 const updateBoard_controller_1 = require("../controllers/board/updateBoard.controller");
-const authenticate_1 = require("../middlewares/authenticate");
+const jwt_strategy_1 = require("../strategies/jwt.strategy");
 const router = (0, express_1.Router)();
-router.use(authenticate_1.authenticateUser);
+// router.use(authenticateUser);
+router.use(jwt_strategy_1.verifyUser);
 router.post('', createBoard_controller_1.createBoard);
 router.get('', getBoard_controller_1.getBoard);
 router.get('/:id', getSingleBoard_controller_1.getSingleBoard);
